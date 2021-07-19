@@ -1,38 +1,104 @@
-.App {
-  text-align: center;
+.app {
+  width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.search-bar {
+  border: 1px solid #000;
+  padding: 1em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
-.App-link {
-  color: #61dafb;
+.tag-list {
+  width: 200px;
+  margin: 2em 0 0 1em;
+  overflow-y: scroll;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.tag {
+  display: block;
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.tag-selected {
+  background-color: #fff0e2;
+  border: 1px solid #fff0e2;
+}
+
+.grid {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em;
+}
+
+.grid .grid-item {
+  flex-basis: 25%;
+}
+
+.artist-card {
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid #000;
+}
+
+@media screen and (max-width: 1500px) {
+  .grid .grid-item {
+    flex-basis: 33.333333%;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media screen and (max-width: 1100px) {
+  .grid .grid-item {
+    flex-basis: 50%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .mobile-filter-toggle {
+    position: fixed;
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #000;
+    font-weight: 600;
+  }
+  .search-bar {
+    position: fixed;
+    width: 100%;
+    margin-top: 52px;
+    background-color: #fff;
+  }
+  .main {
+    padding-top: 104px;
+  }
+  .grid {
+    margin: 0 0 1em 0;
+    border-top: 1px solid #fff;
+  }
+  .grid .grid-item {
+    flex-basis: 100%;
+  }
+  .artist-card {
+    margin-bottom: 0;
+  }
+  .tag-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .tag {
+    flex: 1;
   }
 }
