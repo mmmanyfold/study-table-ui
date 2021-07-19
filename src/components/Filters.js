@@ -4,7 +4,7 @@ const Filters = (props) => {
     const [activeTags, setActiveTags] = useState([])
 
     const isSelected = (tag) => {
-        return Boolean(activeTags.find(t => t.id === tag.id))
+        return activeTags.some(t => t.id === tag.id)
     }
 
     const tagStyle = (tag) => {
