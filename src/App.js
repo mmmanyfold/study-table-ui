@@ -35,9 +35,11 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Filters data={tags} onFilter={onFilter} />
-      <Artists data={filtered} />
+    <div>
+      <div className="main">
+        <Filters data={tags} onFilter={onFilter} />
+        <Artists data={filtered} />
+      </div>
     </div>
   );
 }

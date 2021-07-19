@@ -1,18 +1,32 @@
-.App {
+.main {
   display: flex;
+  align-items: flex-start;
 }
 
-.artists {
+.grid {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid .grid-item {
+  flex-basis: 33.333333%
+}
+
+.artist-card {
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid #000;
+}
+
+.tag-list {
+  width: 200px;
+  overflow-y: scroll;
   padding: 1em;
 }
 
-.tags {
-  overflow-y: scroll;
-  width: 200px;
-}
-
 .tag {
-  width: 100%;
   display: block;
   padding: 1em;
   background-color: #fff;

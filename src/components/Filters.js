@@ -27,7 +27,7 @@ const Filters = (props) => {
     }
 
     return (
-        <div className="tags">
+        <div className="tag-list">
             {props.data.map((tag) => (
                 <div key={tag.id}>
                     <input
