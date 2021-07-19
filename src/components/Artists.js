@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Artists = (props) => {
     return (
-        <div className="grid">
+        <div className="grid" style={!props.visible ? { display: 'none' } : null}>
             {props.data.map(item => (
                 <div key={item.id} className="grid-item">
                     <div className="artist-card">

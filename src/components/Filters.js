@@ -27,7 +27,7 @@ const Filters = (props) => {
     }
 
     return (
-        <div className="tag-list">
+        <div className="tag-list" style={!props.visible ? { display: 'none' } : null}>
             {props.data.map((tag) => (
                 <div key={tag.id}>
                     <input

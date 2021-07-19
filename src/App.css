@@ -1,7 +1,35 @@
+.app {
+  width: 100%;
+}
+
+.search-bar {
+  border: 1px solid #000;
+  padding: 1em;
+}
+
 .main {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+}
+
+.tag-list {
+  width: 200px;
+  margin: 2em 0 0 1em;
+  overflow-y: scroll;
+}
+
+.tag {
+  display: block;
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.tag-selected {
+  background-color: #fff0e2;
+  border: 1px solid #fff0e2;
 }
 
 .grid {
@@ -9,6 +37,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: 1em;
 }
 
 .grid .grid-item {
@@ -19,23 +48,6 @@
   margin: 1em;
   padding: 1em;
   border: 1px solid #000;
-}
-
-.tag-list {
-  width: 200px;
-  overflow-y: scroll;
-  padding: 1em;
-}
-
-.tag {
-  display: block;
-  padding: 1em;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-.tag-selected {
-  background-color: #fff0e2;
 }
 
 @media screen and (max-width: 1500px) {
@@ -51,14 +63,40 @@
 }
 
 @media screen and (max-width: 800px) {
+  .mobile-filter-toggle {
+    position: fixed;
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #000;
+    font-weight: 600;
+  }
+  .search-bar {
+    position: fixed;
+    width: 100%;
+    margin-top: 52px;
+    background-color: #fff;
+  }
+  .main {
+    padding-top: 104px;
+  }
+  .grid {
+    margin: 0 0 1em 0;
+    border-top: 1px solid #fff;
+  }
   .grid .grid-item {
     flex-basis: 100%;
   }
+  .artist-card {
+    margin-bottom: 0;
+  }
   .tag-list {
     width: 100%;
+    margin: 0;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
   }
   .tag {
     flex: 1;
