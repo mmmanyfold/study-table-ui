@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useDebounce from './hooks/useDebounce';
 import useWindowSize from './hooks/useWindowSize';
 import './App.css';
 import Artists from './components/Artists';
@@ -15,6 +16,7 @@ function App() {
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 500);
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
@@ -31,6 +33,12 @@ function App() {
   useEffect(() => {
     setShowTags(windowSize.width > MOBILE_BREAK);
   }, [windowSize]);
+
+  useEffect(() => {
+    if (activeTags || debouncedQuery) {
+      handleFilter(activeTags, debouncedQuery);
+    }
+  }, [activeTags, debouncedQuery]);
 
   const artistsByTag = tags.reduce((ret, t) => {
     const tagArtists = artists.filter((a) => a.tags?.includes(t.name));
@@ -72,23 +80,14 @@ function App() {
       updatedTags = [...activeTags, tag];
     }
     setActiveTags(updatedTags);
-    handleFilter(updatedTags, query);
-  };
-
-  const onSearch = (e) => {
-    const value = e.target.value;
-    setQuery(value);
-    handleFilter(activeTags, value);
   };
 
   const onClearActiveTags = () => {
     setActiveTags([]);
-    handleFilter([], query);
   };
 
   const onClearSearch = () => {
     setQuery('');
-    handleFilter(activeTags, '');
   };
 
   return (
@@ -99,7 +98,7 @@ function App() {
           {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
         </div>
       )}
-      <SearchBar value={query} onChange={onSearch} onClear={onClearSearch} />
+      <SearchBar value={query} onChange={setQuery} onClear={onClearSearch} />
       <div className="main">
         <Filters
           data={tags}
