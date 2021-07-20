@@ -81,6 +81,11 @@ function App() {
     handleFilter(activeTags, value);
   };
 
+  const onClearActiveTags = () => {
+    setActiveTags([]);
+    handleFilter([], query);
+  };
+
   return (
     <div className="app">
       {mobile && (
@@ -95,6 +100,7 @@ function App() {
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
+          onClear={onClearActiveTags}
           visible={showTags}
         />
         <Artists data={filteredArtists} visible={showArtists} />

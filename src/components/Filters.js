@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filters = ({ data, active, visible, onSelect }) => {
+const Filters = ({ data, active, visible, onSelect, onClear }) => {
   const isActive = (tag) => {
     return active.some((t) => t.id === tag.id);
   };
@@ -15,6 +15,11 @@ const Filters = ({ data, active, visible, onSelect }) => {
 
   return (
     <div className="tag-list" style={!visible ? { display: 'none' } : null}>
+      {!!active.length && (
+        <div role="button" onClick={onClear} className="tag-clear-btn">
+          + Clear filters
+        </div>
+      )}
       {data.map((tag) => (
         <div key={tag.id}>
           <input

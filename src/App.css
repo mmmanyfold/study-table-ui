@@ -20,6 +20,12 @@
   flex-wrap: wrap;
 }
 
+.tag-clear-btn {
+  padding: 0 0 1em 1em;
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .tag-list {
   width: 200px;
   margin: 2em 0 0 1em;
@@ -59,7 +65,7 @@
 
 .no-results {
   margin-top: 3em;
-  margin-left: 3em;
+  margin-left: 2em;
   font-size: 1.5em;
 }
 
@@ -109,6 +115,9 @@
     margin-left: 0;
     font-size: 1em;
     text-align: center;
+  }
+  .tag-clear-btn {
+    padding-top: 1em;
   }
   .tag-list {
     width: 100%;
