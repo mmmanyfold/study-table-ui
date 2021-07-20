@@ -1,30 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Filters = ({ data, active, visible, onSelect }) => {
-  const isActive = (tag) => {
-    return active.some((t) => t.id === tag.id);
+const Filters = (props) => {
+  const [activeTags, setActiveTags] = useState([]);
+
+  const isSelected = (tag) => {
+    return activeTags.some((t) => t.id === tag.id);
   };
 
   const tagStyle = (tag) => {
     let style = 'tag';
-    if (isActive(tag)) {
+    if (isSelected(tag)) {
       style += ' tag-selected';
     }
     return style;
   };
 
+  const handleSelect = (tag) => {
+    let active;
+    if (isSelected(tag)) {
+      active = activeTags.filter((t) => t.id !== tag.id);
+    } else {
+      active = [...activeTags, tag];
+    }
+    setActiveTags(active);
+    props.onFilter(active);
+  };
+
   return (
-    <div className="tag-list" style={!visible ? { display: 'none' } : null}>
-      {data.map((tag) => (
+    <div className="tag-list" style={!props.visible ? { display: 'none' } : null}>
+      {props.data.map((tag) => (
         <div key={tag.id}>
           <input
             type="checkbox"
             id={tag.id}
             name="tag"
-            value={isActive(tag)}
+            value={isSelected(tag)}
             style={{ display: 'none' }}
           />
-          <div htmlFor={tag.id} onClick={() => onSelect(tag)} className={tagStyle(tag)}>
+          <div
+            htmlFor={tag.id}
+            onClick={() => handleSelect(tag)}
+            className={tagStyle(tag)}
+          >
             {tag.name}
           </div>
         </div>
