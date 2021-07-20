@@ -14,6 +14,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### `yarn run deploy`
+
+Publishes to Github Pages via `gh-pages` branch.
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
@@ -60,10 +64,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 ### Advanced Configuration
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `yarn build` fails to minify
 
