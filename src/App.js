@@ -39,9 +39,9 @@ function App() {
       setFilteredArtists(artists);
       return;
     }
-    let filteredByTags;
+    let filtered;
     if (tags.length) {
-      filteredByTags = Object.values(
+      filtered = Object.values(
         tags.reduce((ret, t) => {
           artistsByTag[t.name].forEach((artist) => {
             ret[artist.id] = artist;
@@ -50,11 +50,13 @@ function App() {
         }, {})
       );
     } else {
-      filteredByTags = artists;
+      filtered = artists;
     }
-    const filtered = filteredByTags.filter((artist) =>
-      artist.name.toLowerCase().includes(query.toLowerCase())
-    );
+    if (query.length) {
+      filtered = filtered.filter((artist) =>
+        artist.name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
     setFilteredArtists(filtered);
   };
 
