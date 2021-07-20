@@ -12,7 +12,7 @@ function App() {
   const [filteredArtists, setFilteredArtists] = useState([]);
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
-  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
@@ -34,7 +34,31 @@ function App() {
     return { ...ret, [t.name]: tagArtists };
   }, {});
 
-  const handleSelectTag = (tag) => {
+  const handleFilter = (tags, query) => {
+    if (!tags.length && !query) {
+      setFilteredArtists(artists);
+      return;
+    }
+    let filteredByTags;
+    if (tags.length) {
+      filteredByTags = Object.values(
+        tags.reduce((ret, t) => {
+          artistsByTag[t.name].forEach((artist) => {
+            ret[artist.id] = artist;
+          });
+          return ret;
+        }, {})
+      );
+    } else {
+      filteredByTags = artists;
+    }
+    const filtered = filteredByTags.filter((artist) =>
+      artist.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredArtists(filtered);
+  };
+
+  const onSelectTag = (tag) => {
     const isActive = activeTags.some((t) => t.id === tag.id);
     let updatedTags;
     if (isActive) {
@@ -43,25 +67,13 @@ function App() {
       updatedTags = [...activeTags, tag];
     }
     setActiveTags(updatedTags);
-
-    if (!updatedTags.length) {
-      setFilteredArtists(artists);
-      return;
-    }
-    const filtered = Object.values(
-      updatedTags.reduce((ret, t) => {
-        artistsByTag[t.name].forEach((artist) => {
-          ret[artist.id] = artist;
-        });
-        return ret;
-      }, {})
-    );
-    setFilteredArtists(filtered);
+    handleFilter(updatedTags, query);
   };
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-    // TODO
+  const onSearch = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    handleFilter(activeTags, value);
   };
 
   return (
@@ -71,12 +83,12 @@ function App() {
           {showTags ? 'Hide Filters' : 'Show Filters'}
         </div>
       )}
-      <SearchBar value={search} onChange={handleSearch} />
+      <SearchBar value={query} onChange={onSearch} />
       <div className="main">
         <Filters
           data={tags}
           active={activeTags}
-          onSelect={handleSelectTag}
+          onSelect={onSelectTag}
           visible={showTags}
         />
         <Artists data={filteredArtists} visible={showArtists} />
