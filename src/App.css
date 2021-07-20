@@ -1,10 +1,17 @@
 .app {
   width: 100%;
+  font-size: 1em;
 }
 
-.search-bar {
-  border: 1px solid #000;
+.search-container {
+  display: flex;
+}
+
+.search-input {
+  flex: 1;
   padding: 1em;
+  border: 1px solid #000;
+  font-size: 1em;
 }
 
 .main {
@@ -50,6 +57,12 @@
   border: 1px solid #000;
 }
 
+.no-results {
+  margin-top: 3em;
+  margin-left: 3em;
+  font-size: 1.5em;
+}
+
 @media screen and (max-width: 1500px) {
   .grid .grid-item {
     flex-basis: 33.333333%;
@@ -70,11 +83,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    border: 1px solid #000;
     font-weight: 600;
   }
-  .search-bar {
+  .search-container {
     position: fixed;
     width: 100%;
     margin-top: 52px;
@@ -92,6 +103,12 @@
   }
   .artist-card {
     margin-bottom: 0;
+  }
+  .no-results {
+    flex: 1;
+    margin-left: 0;
+    font-size: 1em;
+    text-align: center;
   }
   .tag-list {
     width: 100%;

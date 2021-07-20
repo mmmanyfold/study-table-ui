@@ -3,27 +3,30 @@ import useWindowSize from './hooks/useWindowSize';
 import './App.css';
 import Artists from './components/Artists';
 import Filters from './components/Filters';
+import SearchBar from './components/SearchBar';
 
 const MOBILE_BREAK = 800;
 
 function App() {
   const [artists, setArtists] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [filteredArtists, setFilteredArtists] = useState([]);
   const [tags, setTags] = useState([]);
+  const [activeTags, setActiveTags] = useState([]);
+  const [query, setQuery] = useState('');
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
-  const [showFilters, setShowFilters] = useState(!mobile);
-  const showArtists = !mobile || !showFilters;
+  const [showTags, setShowTags] = useState(!mobile);
+  const showArtists = !mobile || !showTags;
 
   useEffect(() => {
     setArtists(tempArtists);
     setTags(tempTags);
-    setFiltered(tempArtists);
+    setFilteredArtists(tempArtists);
   }, [artists, tags]);
 
   useEffect(() => {
-    setShowFilters(windowSize.width > MOBILE_BREAK);
+    setShowTags(windowSize.width > MOBILE_BREAK);
   }, [windowSize]);
 
   const artistsByTag = tags.reduce((ret, t) => {
@@ -31,36 +34,67 @@ function App() {
     return { ...ret, [t.name]: tagArtists };
   }, {});
 
-  const onFilter = (selectedTags) => {
-    if (!selectedTags.length) {
-      setFiltered(artists);
+  const handleFilter = (tags, query) => {
+    if (!tags.length && !query) {
+      setFilteredArtists(artists);
       return;
     }
-    const filteredArtists = Object.values(
-      selectedTags.reduce((ret, t) => {
-        artistsByTag[t.name].forEach((artist) => {
-          ret[artist.id] = artist;
-        });
-        return ret;
-      }, {})
-    );
-    setFiltered(filteredArtists);
+    let filtered;
+    if (tags.length) {
+      filtered = Object.values(
+        tags.reduce((ret, t) => {
+          artistsByTag[t.name].forEach((artist) => {
+            ret[artist.id] = artist;
+          });
+          return ret;
+        }, {})
+      );
+    } else {
+      filtered = artists;
+    }
+    if (query.length) {
+      filtered = filtered.filter((artist) =>
+        artist.name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    setFilteredArtists(filtered);
+  };
+
+  const onSelectTag = (tag) => {
+    const isActive = activeTags.some((t) => t.id === tag.id);
+    let updatedTags;
+    if (isActive) {
+      updatedTags = activeTags.filter((t) => t.id !== tag.id);
+    } else {
+      updatedTags = [...activeTags, tag];
+    }
+    setActiveTags(updatedTags);
+    handleFilter(updatedTags, query);
+  };
+
+  const onSearch = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    handleFilter(activeTags, value);
   };
 
   return (
     <div className="app">
       {mobile && (
-        <div
-          className="mobile-filter-toggle"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          {showFilters ? 'Hide Filters' : 'Show Filters'}
+        <div className="mobile-filter-toggle" onClick={() => setShowTags(!showTags)}>
+          {showTags ? 'Hide Filters' : 'Show Filters'}
+          {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
         </div>
       )}
-      <div className="search-bar">Search</div>
+      <SearchBar value={query} onChange={onSearch} />
       <div className="main">
-        <Filters data={tags} onFilter={onFilter} visible={showFilters} />
-        <Artists data={filtered} visible={showArtists} />
+        <Filters
+          data={tags}
+          active={activeTags}
+          onSelect={onSelectTag}
+          visible={showTags}
+        />
+        <Artists data={filteredArtists} visible={showArtists} />
       </div>
     </div>
   );
