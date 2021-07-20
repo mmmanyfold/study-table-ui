@@ -86,6 +86,11 @@ function App() {
     handleFilter([], query);
   };
 
+  const onClearSearch = () => {
+    setQuery('');
+    handleFilter(activeTags, '');
+  };
+
   return (
     <div className="app">
       {mobile && (
@@ -94,7 +99,7 @@ function App() {
           {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
         </div>
       )}
-      <SearchBar value={query} onChange={onSearch} />
+      <SearchBar value={query} onChange={onSearch} onClear={onClearSearch} />
       <div className="main">
         <Filters
           data={tags}
