@@ -81,6 +81,7 @@ function App() {
       {mobile && (
         <div className="mobile-filter-toggle" onClick={() => setShowTags(!showTags)}>
           {showTags ? 'Hide Filters' : 'Show Filters'}
+          {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
         </div>
       )}
       <SearchBar value={query} onChange={onSearch} />
