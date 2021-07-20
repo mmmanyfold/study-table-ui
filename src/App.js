@@ -7,6 +7,8 @@ import SearchBar from './components/SearchBar';
 
 const MOBILE_BREAK = 800;
 
+const sortByName = (artists) => artists.sort((a, b) => (a.name > b.name ? 1 : -1));
+
 function App() {
   const [artists, setArtists] = useState([]);
   const [filteredArtists, setFilteredArtists] = useState([]);
@@ -20,9 +22,10 @@ function App() {
   const showArtists = !mobile || !showTags;
 
   useEffect(() => {
-    setArtists(tempArtists);
+    const artists = sortByName(tempArtists);
+    setArtists(artists);
     setTags(tempTags);
-    setFilteredArtists(tempArtists);
+    setFilteredArtists(artists);
   }, [artists, tags]);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ function App() {
         artist.name.toLowerCase().includes(query.toLowerCase())
       );
     }
-    setFilteredArtists(filtered);
+    setFilteredArtists(sortByName(filtered));
   };
 
   const onSelectTag = (tag) => {
@@ -78,6 +81,16 @@ function App() {
     handleFilter(activeTags, value);
   };
 
+  const onClearActiveTags = () => {
+    setActiveTags([]);
+    handleFilter([], query);
+  };
+
+  const onClearSearch = () => {
+    setQuery('');
+    handleFilter(activeTags, '');
+  };
+
   return (
     <div className="app">
       {mobile && (
@@ -86,12 +99,13 @@ function App() {
           {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
         </div>
       )}
-      <SearchBar value={query} onChange={onSearch} />
+      <SearchBar value={query} onChange={onSearch} onClear={onClearSearch} />
       <div className="main">
         <Filters
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
+          onClear={onClearActiveTags}
           visible={showTags}
         />
         <Artists data={filteredArtists} visible={showArtists} />
