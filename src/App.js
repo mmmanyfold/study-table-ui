@@ -7,6 +7,8 @@ import SearchBar from './components/SearchBar';
 
 const MOBILE_BREAK = 800;
 
+const sortByName = (artists) => artists.sort((a, b) => (a.name > b.name ? 1 : -1));
+
 function App() {
   const [artists, setArtists] = useState([]);
   const [filteredArtists, setFilteredArtists] = useState([]);
@@ -20,9 +22,10 @@ function App() {
   const showArtists = !mobile || !showTags;
 
   useEffect(() => {
-    setArtists(tempArtists);
+    const artists = sortByName(tempArtists);
+    setArtists(artists);
     setTags(tempTags);
-    setFilteredArtists(tempArtists);
+    setFilteredArtists(artists);
   }, [artists, tags]);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ function App() {
         artist.name.toLowerCase().includes(query.toLowerCase())
       );
     }
-    setFilteredArtists(filtered);
+    setFilteredArtists(sortByName(filtered));
   };
 
   const onSelectTag = (tag) => {
