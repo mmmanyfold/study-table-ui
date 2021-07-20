@@ -1,10 +1,17 @@
 .app {
   width: 100%;
+  font-size: 1em;
 }
 
-.search-bar {
-  border: 1px solid #000;
+.search-container {
+  display: flex;
+}
+
+.search-input {
+  flex: 1;
   padding: 1em;
+  border: 1px solid #000;
+  font-size: 1em;
 }
 
 .main {
