@@ -57,6 +57,11 @@
   border: 1px solid #000;
 }
 
+.no-results {
+  margin-top: 1em;
+  font-size: 1.5em;
+}
+
 @media screen and (max-width: 1500px) {
   .grid .grid-item {
     flex-basis: 33.333333%;
@@ -99,6 +104,12 @@
   }
   .artist-card {
     margin-bottom: 0;
+  }
+  .no-results {
+    flex: 1;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 3em;
   }
   .tag-list {
     width: 100%;
