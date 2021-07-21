@@ -77,9 +77,27 @@
   height: 200px;
 }
 
-.artist-name {
+.artist-info {
   margin: 0.5em;
+}
+
+.artist-name {
+  margin-bottom: 0.5em;
   font-size: 1.2em;
+  font-weight: 600;
+}
+
+.artist-tags {
+  height: 50px;
+  overflow-y: scroll;
+  font-size: 0.7em;
+}
+
+.artist-tag {
+  display: inline-block;
+  margin: 0 8px 6px 0;
+  padding: 3px 6px;
+  background-color: #fff0e2;
 }
 
 .no-results {
@@ -136,16 +154,23 @@
     flex-basis: 100%;
   }
   .artist-card {
+    height: 115px;
     display: flex;
     margin-bottom: 0;
   }
   .artist-image {
     width: 70px;
-    height: 70px;
+    height: 115px;
+    margin-right: 5px;
+  }
+  .artist-info {
+    flex: 1;
   }
   .artist-name {
-    font-size: 0.8em;
-    font-weight: 600;
+    font-size: 1em;
+  }
+  .artist-tags {
+    height: 80px;
   }
   .no-results {
     flex: 1;
