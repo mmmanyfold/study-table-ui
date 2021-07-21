@@ -14,7 +14,16 @@ const Artists = ({ data, visible }) => {
                 backgroundPosition: 'center',
               }}
             ></div>
-            <div className="artist-name">{item.name}</div>
+            <div className="artist-info">
+              <div className="artist-name">{item.name}</div>
+              <div className="artist-tags">
+                {item.tags.map((tag, i) => (
+                  <div key={`${tag}-${i}`} className="artist-tag">
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       ))}
