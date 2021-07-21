@@ -82,29 +82,27 @@ function App() {
     setActiveTags(updatedTags);
   };
 
-  const onClearActiveTags = () => {
-    setActiveTags([]);
-  };
-
-  const onClearSearch = () => {
-    setQuery('');
-  };
+  const mobileFilterToggle = (
+    <div
+      onClick={() => setShowTags(!showTags)}
+      className="mobile-filter-toggle"
+      style={showTags ? { justifyContent: 'flex-start', marginLeft: '1em' } : {}}
+    >
+      {showTags ? '← View Artists' : '+ View Filters'}
+      {!showTags && !!activeTags.length && ` (${activeTags.length})`}
+    </div>
+  );
 
   return (
     <div className="app">
-      {mobile && (
-        <div className="mobile-filter-toggle" onClick={() => setShowTags(!showTags)}>
-          {showTags ? 'Hide Filters' : 'Show Filters'}
-          {mobile && activeTags.length ? ` (${activeTags.length})` : ''}
-        </div>
-      )}
-      <SearchBar value={query} onChange={setQuery} onClear={onClearSearch} />
+      {mobile && mobileFilterToggle}
+      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
       <div className="main">
         <Filters
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
-          onClear={onClearActiveTags}
+          onClear={() => setActiveTags([])}
           visible={showTags}
         />
         <Artists data={filteredArtists} visible={showArtists} />
@@ -134,14 +132,67 @@ const tempTags = [
 ];
 
 const tempArtists = [
-  { id: 1, name: 'Maia Ruth Lee', tags: ['Performance', 'Sculpture'] },
-  { id: 2, name: 'Anne Wu', tags: ['Sculpture'] },
-  { id: 3, name: 'Kenneth Tam', tags: ['Performance'] },
-  { id: 4, name: 'Adam Milner', tags: ['Painting', 'Sculpture'] },
-  { id: 5, name: 'Lauren Mackler', tags: ['Drawing', '1980s', 'Performance'] },
-  { id: 6, name: 'Maia Ruth Lee', tags: ['Performance', 'Sculpture'] },
-  { id: 7, name: 'Anne Wu', tags: ['Sculpture'] },
-  { id: 8, name: 'Kenneth Tam', tags: ['Performance'] },
-  { id: 9, name: 'Adam Milner', tags: ['Painting', 'Sculpture'] },
-  { id: 10, name: 'Lauren Mackler', tags: ['Drawing', '1980s', 'Performance'] },
+  {
+    id: 1,
+    name: 'Simone Forti',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/0936f073c25da2b872272632d75e696c/911b163c',
+    tags: ['Performance', 'Sculpture'],
+  },
+  {
+    id: 2,
+    name: 'Donald Judd',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/823a03723b50d95667362db68d411800/e98496b3',
+    tags: ['Sculpture'],
+  },
+  {
+    id: 3,
+    name: 'Ai Weiwei',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/b11f2437050701a0a720633ee5bfe219/065e37d6',
+    tags: ['Performance'],
+  },
+  {
+    id: 4,
+    name: 'Adam Milner',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/27b4b8de66850f940e8c84a06a9ae8b8/fdcb6f11',
+    tags: ['Painting', 'Sculpture'],
+  },
+  {
+    id: 5,
+    name: 'Aki Sasamoto',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/65efd89bfb83773ac0beee9fa1e5bdf1/036c211c',
+    tags: ['Drawing', '1980s', 'Performance'],
+  },
+  {
+    id: 6,
+    name: 'Amber Hawk Swanson',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/58d173d0d3814af20b277ab544beeb58/d06de9d8',
+    tags: ['Performance', 'Sculpture'],
+  },
+  {
+    id: 7,
+    name: 'Andre Cadere',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/871c3abc0b395d67da68d2cfda9944d6/278f787e',
+    tags: ['Sculpture'],
+  },
+  {
+    id: 8,
+    name: 'Ann Hamilton',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/3f09f9641c5ca37430a8018a635157f9/04015541',
+    tags: ['Performance'],
+  },
+  {
+    id: 9,
+    name: 'Ann Veronica Janssens',
+    image:
+      'https://dl.airtable.com/.attachmentThumbnails/79ef14fdab6c2744efeb61803d574380/3c0c029f',
+    tags: ['Drawing', '1980s', 'Performance'],
+  },
 ];

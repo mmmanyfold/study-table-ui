@@ -14,14 +14,18 @@ const Filters = ({ data, active, visible, onSelect, onClear }) => {
   };
 
   return (
-    <div className="tag-list" style={!visible ? { display: 'none' } : null}>
-      {!!active.length && (
-        <div role="button" onClick={onClear} className="tag-clear-btn">
-          + Clear filters
-        </div>
-      )}
+    <div className="tags-container" style={!visible ? { display: 'none' } : null}>
+      <div className="tags-header">
+        {active.length ? (
+          <div role="button" onClick={onClear} style={{ cursor: 'pointer' }}>
+            Clear All {!!active.length && ` (${active.length})`}
+          </div>
+        ) : (
+          <div>Filter by Tags</div>
+        )}
+      </div>
       {data.map((tag) => (
-        <div key={tag.id}>
+        <div key={tag.id} className="tag-wrapper">
           <input
             type="checkbox"
             id={tag.id}
