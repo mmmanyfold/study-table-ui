@@ -129,6 +129,20 @@ const tempTags = [
   { id: 13, name: 'Drawing' },
   { id: 14, name: 'Painting' },
   { id: 15, name: '1980s' },
+  { id: 16, name: 'Performance' },
+  { id: 17, name: 'Sculpture' },
+  { id: 18, name: 'Drawing' },
+  { id: 19, name: 'Painting' },
+  { id: 20, name: 'Painting' },
+  { id: 21, name: 'Performance' },
+  { id: 22, name: 'Sculpture' },
+  { id: 23, name: 'Drawing' },
+  { id: 24, name: 'Painting' },
+  { id: 25, name: '1980s' },
+  { id: 26, name: 'Performance' },
+  { id: 27, name: 'Sculpture' },
+  { id: 28, name: 'Drawing' },
+  { id: 29, name: 'Painting' },
 ];
 
 const tempArtists = [
