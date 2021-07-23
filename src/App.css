@@ -45,6 +45,10 @@
   background-color: #fff0e2;
 }
 
+.artist-view {
+  
+}
+
 .filters-scrollview {
   width: 200px;
   height: 100vh;
@@ -124,7 +128,7 @@
 
 .search-clear-icon {
   display: flex;
-  padding-right: 1em;
+  padding: 1em;
   cursor: pointer;
 }
 
@@ -191,7 +195,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 6.1em;
+    margin-top: 6.2em;
   }
   .filters-header {
     width: 100%;
@@ -214,7 +218,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 2px;
+    padding-top: 3.5px;
     background-color: #fff;
     font-size: 1em;
     font-weight: 600;
@@ -228,7 +232,7 @@
   }
   .search-container {
     width: 100%;
-    margin-top: 3em;
+    margin-top: 3.1em;
     background-color: #fff;
     border-top-width: 1px;
     border-color: #000;
