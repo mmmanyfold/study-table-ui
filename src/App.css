@@ -1,50 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600&display=swap');
+
 .app {
   width: 100%;
+  font-family: 'Martel Sans', sans-serif;
+  font-weight: 400;
   font-size: 1em;
+  color: #333;
 }
 
-.search-container {
-  position: fixed;
+.artist-card {
+  margin: 1em;
+  overflow: hide;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+}
+
+.artist-image {
   width: 100%;
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  z-index: 1;
+  height: 200px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
-.search-input {
-  flex: 1;
-  padding: 0.8em 1em;
+.artist-name {
+  margin-bottom: 0.25em;
   font-size: 1.2em;
-  border-width: 0 0 2px 0;
-  border-color: #000;
-}
-
-.search-clear-icon {
-  padding: 1.1em;
-  border-width: 0 0 2px 0;
-  border-color: #000;
-  border-style: solid;
-  cursor: pointer;
-}
-
-.main {
-  position: fixed;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-}
-
-.filters-header {
-  display: flex;
-  padding: 0 0 1em 1em;
   font-weight: 600;
+}
+
+.artist-info {
+  margin: 0.5em;
+}
+
+.artist-tags {
+  height: 50px;
+  overflow-y: scroll;
+  font-size: 0.75em;
+}
+
+.artist-tag {
+  display: inline-block;
+  margin: 0 8px 6px 0;
+  padding: 2.75px 8px 1px 8px;
+  background-color: #fff0e2;
+}
+
+.artist-view {
+  
 }
 
 .filters-scrollview {
   width: 200px;
   height: 100vh;
-  padding-top: 5.25em;
+  padding-top: 5.8em;
   padding-left: 1em;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
@@ -55,17 +63,10 @@
   display: none;
 }
 
-.tag {
-  display: block;
-  padding: 1em;
-  background-color: #fff;
-  border: 1px solid #fff;
-  cursor: pointer;
-}
-
-.tag-selected {
-  background-color: #fff0e2;
-  border: 1px solid #fff0e2;
+.filters-header {
+  display: flex;
+  padding: 0 0 1em 1em;
+  font-weight: 600;
 }
 
 .grid-scrollview {
@@ -84,45 +85,18 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 4.25em 1em 1em 1em;
+  padding: 4.7em 1em 1em 1em;
 }
 
-.grid .grid-item {
+.grid-item {
   flex-basis: 25%;
 }
 
-.artist-card {
-  margin: 1em;
-  border-radius: 2px;
-  border: 1px solid #000;
-}
-
-.artist-image {
+.main {
+  position: fixed;
   width: 100%;
-  height: 200px;
-}
-
-.artist-info {
-  margin: 0.5em;
-}
-
-.artist-name {
-  margin-bottom: 0.5em;
-  font-size: 1.2em;
-  font-weight: 600;
-}
-
-.artist-tags {
-  height: 50px;
-  overflow-y: scroll;
-  font-size: 0.7em;
-}
-
-.artist-tag {
-  display: inline-block;
-  margin: 0 8px 6px 0;
-  padding: 3px 6px;
-  background-color: #fff0e2;
+  display: flex;
+  align-items: flex-start;
 }
 
 .no-results {
@@ -131,70 +105,124 @@
   font-size: 1.5em;
 }
 
+.search-container {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-width: 0 0 1px 0;
+  border-color: #bbb;
+  border-style: solid;
+  z-index: 1;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.8em 1em 0.5em 1em;
+  font-family: 'Martel Sans', sans-serif;
+  font-size: 1.2em;
+  border: 0;
+}
+
+.search-clear-icon {
+  display: flex;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.tag {
+  display: block;
+  padding: 0.55em 1em 0.25em 1em;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
+.tag-selected {
+  background-color: #fff0e2;
+  border: 1px solid #fff0e2;
+}
+
+/* MEDIA QUERIES */
+
 @media screen and (max-width: 1500px) {
-  .grid .grid-item {
+  .grid-item {
     flex-basis: 33.333333%;
   }
 }
 
 @media screen and (max-width: 1100px) {
-  .grid .grid-item {
+  .grid-item {
     flex-basis: 50%;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .mobile-filter-toggle {
-    position: fixed;
-    width: 100%;
-    height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    font-size: 1em;
-    font-weight: 600;
-    z-index: 1;
-  }
-  .search-container {
-    width: 100%;
-    margin-top: 3em;
-    background-color: #fff;
-  }
-  .search-input {
-    padding: 0.9em;
-    border-width: 1px 0;
-    font-size: 1em;
-  }
-  .search-clear-icon {
-    padding: 0.9em;
-    border-width: 1px 0;
-  }
-  .grid {
-    margin: 6.1em 0 1em 0;
-    padding: 0;
-  }
-  .grid .grid-item {
-    flex-basis: 100%;
-  }
   .artist-card {
     height: 115px;
     display: flex;
     margin-bottom: 0;
+    border-color: #000;
+    border-radius: 0;
   }
   .artist-image {
     width: 70px;
     height: 115px;
     margin-right: 5px;
+    border-radius: 0;
+  }
+  .artist-name {
+    font-size: 1em;
+    font-weight: 600;
   }
   .artist-info {
     flex: 1;
   }
-  .artist-name {
-    font-size: 1em;
-  }
   .artist-tags {
     height: 80px;
+    font-size: 0.7em;
+  }
+  .artist-tag {
+    padding: 2px 6px 0 6px;
+  }
+  .filters-scrollview {
+    width: 100%;
+    padding: 0;
+  }
+  .filters-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 6.2em;
+  }
+  .filters-header {
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+    margin: 1.6em 0 0.5em 0;
+    font-size: 0.8em;
+  }
+  .grid {
+    margin: 6.5em 0 1em 0;
+    padding: 0;
+  }
+  .grid-item {
+    flex-basis: 100%;
+  }
+  .mobile-filter-toggle {
+    position: fixed;
+    width: 100%;
+    height: 3.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3.5px;
+    background-color: #fff;
+    font-size: 1em;
+    font-weight: 600;
+    z-index: 1;
   }
   .no-results {
     flex: 1;
@@ -202,27 +230,23 @@
     font-size: 1em;
     text-align: center;
   }
-  .filters-scrollview {
+  .search-container {
     width: 100%;
-    padding: 0;
+    margin-top: 3.1em;
+    background-color: #fff;
+    border-top-width: 1px;
+    border-color: #000;
   }
-  .filters-header {
-    width: 100%;
-    justify-content: center;
-    padding: 0;
-    margin: 1.5em 0 1em 0;
-    font-size: 0.8em;
-  }
-  .filters-container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 6.1em;
+  .search-input {
+    padding: 0.75em 1em 0.5em 1em;
+    font-size: 1em;
   }
   .tag-wrapper {
     flex-basis: 33.333333%;
   }
   .tag {
     font-size: 0.8em;
+    padding: 1em 1em 0.65em 1em;
+    text-align: center;
   }
 }
