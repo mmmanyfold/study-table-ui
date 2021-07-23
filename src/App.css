@@ -9,10 +9,12 @@
 }
 
 .artist-card {
-  margin: 1em;
+  flex: 1;
+  margin: 16px;
   overflow: hide;
   border-radius: 6px;
   border: 1px solid #bbb;
+  background-color: #fff;
 }
 
 .artist-image {
@@ -52,8 +54,8 @@
 .filters-scrollview {
   width: 200px;
   height: 100vh;
-  padding-top: 5.8em;
-  padding-left: 1em;
+  padding-top: 93px;
+  padding-left: 16px;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -65,7 +67,7 @@
 
 .filters-header {
   display: flex;
-  padding: 0 0 1em 1em;
+  padding: 0 0 16px 16px;
   font-weight: 600;
 }
 
@@ -82,14 +84,21 @@
 }
 
 .grid {
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 4.7em 1em 1em 1em;
+  padding: 75.2px 16px 16px 16px;
 }
 
 .grid-item {
+  display: flex;
   flex-basis: 25%;
+}
+
+.grid-item.selected {
+  height: 80vh;
+  position: fixed;
 }
 
 .main {
@@ -166,6 +175,9 @@
     margin-bottom: 0;
     border-color: #000;
     border-radius: 0;
+  }
+  .artist-card.selected {
+    height: 80vh;
   }
   .artist-image {
     width: 70px;
