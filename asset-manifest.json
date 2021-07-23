@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/study-table-ui/static/css/main.7387e4c7.chunk.css",
-    "main.js": "/study-table-ui/static/js/main.48ab1d51.chunk.js",
-    "main.js.map": "/study-table-ui/static/js/main.48ab1d51.chunk.js.map",
+    "main.css": "/study-table-ui/static/css/main.6b02e0bf.chunk.css",
+    "main.js": "/study-table-ui/static/js/main.59fb431a.chunk.js",
+    "main.js.map": "/study-table-ui/static/js/main.59fb431a.chunk.js.map",
     "runtime-main.js": "/study-table-ui/static/js/runtime-main.15d11d1f.js",
     "runtime-main.js.map": "/study-table-ui/static/js/runtime-main.15d11d1f.js.map",
     "static/js/2.0a4d657d.chunk.js": "/study-table-ui/static/js/2.0a4d657d.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.649f74a6.chunk.js": "/study-table-ui/static/js/3.649f74a6.chunk.js",
     "static/js/3.649f74a6.chunk.js.map": "/study-table-ui/static/js/3.649f74a6.chunk.js.map",
     "index.html": "/study-table-ui/index.html",
-    "static/css/main.7387e4c7.chunk.css.map": "/study-table-ui/static/css/main.7387e4c7.chunk.css.map",
+    "static/css/main.6b02e0bf.chunk.css.map": "/study-table-ui/static/css/main.6b02e0bf.chunk.css.map",
     "static/js/2.0a4d657d.chunk.js.LICENSE.txt": "/study-table-ui/static/js/2.0a4d657d.chunk.js.LICENSE.txt",
     "static/media/close-icon.7f549529.svg": "/study-table-ui/static/media/close-icon.7f549529.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.15d11d1f.js",
     "static/js/2.0a4d657d.chunk.js",
-    "static/css/main.7387e4c7.chunk.css",
-    "static/js/main.48ab1d51.chunk.js"
+    "static/css/main.6b02e0bf.chunk.css",
+    "static/js/main.59fb431a.chunk.js"
   ]
 }
