@@ -19,7 +19,7 @@
 
 .artist-thumb {
   height: 200px;
-  padding: 1em;
+  padding: 0 0.35em;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   font-size: 0.8em;
@@ -32,16 +32,30 @@
   display: none;
 }
 
+.artist-info {
+  padding: 1em 1em 3em 1em;
+}
+
+.artist-return-btn {
+  position: absolute;
+  bottom: 0;
+  padding: 0.25em 0.5em 0 0.75em;
+  background-color: #fff;
+  font-size: 1.25em;
+  cursor: pointer;
+}
+
+.artist-heading {
+  padding: 0.6em 0.9em;
+  border-top: 1px solid #bbb;
+}
+
 .artist-name {
   margin-bottom: 0.25em;
   font-size: 1.2em;
   font-weight: 600;
 }
 
-.artist-info {
-  padding: 0.6em 0.9em;
-  border-top: 1px solid #bbb;
-}
 
 .artist-tags {
   height: 50px;
@@ -197,18 +211,18 @@
   .artist-thumb {
     width: 70px;
     height: 115px;
-    padding: 0;
     margin-right: 5px;
+    padding: 0;
     border-radius: 0;
+  }
+  .artist-heading {
+    flex: 1;
+    padding: 0.5em;
+    border: 0;
   }
   .artist-name {
     font-size: 1em;
     font-weight: 600;
-  }
-  .artist-info {
-    flex: 1;
-    padding: 0.5em;
-    border: 0;
   }
   .artist-tags {
     height: 80px;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useDebounce from './hooks/useDebounce';
 import useWindowSize from './hooks/useWindowSize';
-import Artists from './components/Artists';
+import ArtistGrid from './components/ArtistGrid';
 import Filters from './components/Filters';
 import SearchBar from './components/SearchBar';
 import './App.css';
@@ -105,7 +105,7 @@ function App() {
           onClear={() => setActiveTags([])}
           visible={showTags}
         />
-        <Artists
+        <ArtistGrid
           data={filteredArtists}
           visible={showArtists}
           windowSize={windowSize}
