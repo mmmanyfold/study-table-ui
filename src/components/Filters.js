@@ -8,7 +8,7 @@ const Filters = ({ data, active, visible, onSelect, onClear }) => {
   const tagStyle = (tag) => {
     let style = 'tag';
     if (isActive(tag)) {
-      style += ' tag-selected';
+      style += ' selected';
     }
     return style;
   };

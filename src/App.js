@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useDebounce from './hooks/useDebounce';
 import useWindowSize from './hooks/useWindowSize';
-import './App.css';
-import Artists from './components/Artists';
+import ArtistGrid from './components/ArtistGrid';
 import Filters from './components/Filters';
 import SearchBar from './components/SearchBar';
+import './App.css';
 
 const MOBILE_BREAK = 800;
 
@@ -105,7 +105,12 @@ function App() {
           onClear={() => setActiveTags([])}
           visible={showTags}
         />
-        <Artists data={filteredArtists} visible={showArtists} />
+        <ArtistGrid
+          data={filteredArtists}
+          visible={showArtists}
+          windowSize={windowSize}
+          mobile={mobile}
+        />
       </div>
     </div>
   );
