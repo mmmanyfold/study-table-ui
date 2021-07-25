@@ -11,6 +11,8 @@ const JSON_ENDPOINT =
   'https://study-table-service-assets.s3.us-east-1.amazonaws.com/airtable.json';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [artists, setArtists] = useState([]);
   const [filteredArtists, setFilteredArtists] = useState([]);
   const [tags, setTags] = useState([]);
@@ -24,18 +26,6 @@ function App() {
   const showArtists = !mobile || !showTags;
 
   useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const response = await fetch(JSON_ENDPOINT);
-        const { tags, records } = await response.json();
-        setTags(tags);
-        const artists = sortByName(records);
-        setArtists(artists);
-        setFilteredArtists(artists);
-      } catch (err) {
-        console.error('Error - ', err);
-      }
-    };
     fetchdata();
   }, []);
 
@@ -48,6 +38,23 @@ function App() {
       handleFilter(activeTags, debouncedQuery);
     }
   }, [activeTags, debouncedQuery]);
+
+  const fetchdata = async () => {
+    setError(false);
+    setLoading(true);
+    try {
+      const response = await fetch(JSON_ENDPOINT);
+      const { tags, records } = await response.json();
+      setTags(tags);
+      const artists = sortByName(records);
+      setArtists(artists);
+      setFilteredArtists(artists);
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const artistsByTag = tags.reduce((ret, t) => {
     const tagArtists = artists.filter((a) => a.fields?.Tags?.includes(t.name));
@@ -102,10 +109,21 @@ function App() {
     </div>
   );
 
-  return (
-    <div className="app">
-      {mobile && mobileFilterToggle}
-      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+  let content;
+  if (loading) {
+    content = (
+      <div className="loading">
+        <div>Loading Artists...</div>
+      </div>
+    );
+  } else if (error) {
+    content = (
+      <div className="loading">
+        <div>Something went wrong. Please try reloading the page.</div>
+      </div>
+    );
+  } else {
+    content = (
       <div className="main">
         <Filters
           data={tags}
@@ -121,6 +139,14 @@ function App() {
           mobile={mobile}
         />
       </div>
+    );
+  }
+
+  return (
+    <div className="app">
+      {mobile && mobileFilterToggle}
+      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+      {content}
     </div>
   );
 }
