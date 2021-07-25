@@ -35,7 +35,7 @@ const Filters = ({ data, active, visible, onSelect, onClear }) => {
               style={{ display: 'none' }}
             />
             <div htmlFor={tag.id} onClick={() => onSelect(tag)} className={tagStyle(tag)}>
-              {tag.name}
+              <div>{tag.name}</div>
             </div>
           </div>
         ))}
