@@ -210,7 +210,7 @@ a {
 
 @media screen and (max-width: 800px) {
   .artist-card {
-    height: 111px;
+    height: 119px;
     display: flex;
     margin-bottom: 0;
     border-color: #000;
@@ -218,7 +218,7 @@ a {
   }
   .artist-thumb {
     width: 70px;
-    height: 111px;
+    height: 119px;
     margin-right: 5px;
     padding: 0;
     border-radius: 0;

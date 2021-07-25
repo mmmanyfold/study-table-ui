@@ -70,7 +70,9 @@ const getThumbnailStyle = (mobile, selected, item) => {
   }
   const images = item?.fields?.Image;
   if (!images?.length) {
-    return null;
+    return {
+      backgroundColor: '#f8f8f8',
+    };
   }
   const url = images[0].thumbnails.large.url;
   return {
