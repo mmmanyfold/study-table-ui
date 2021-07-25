@@ -7,8 +7,8 @@ import SearchBar from './components/SearchBar';
 import './App.css';
 
 const MOBILE_BREAK = 800;
-
-const sortByName = (artists) => artists.sort((a, b) => (a.name > b.name ? 1 : -1));
+const JSON_ENDPOINT =
+  'https://study-table-service-assets.s3.us-east-1.amazonaws.com/airtable.json';
 
 function App() {
   const [artists, setArtists] = useState([]);
@@ -24,11 +24,20 @@ function App() {
   const showArtists = !mobile || !showTags;
 
   useEffect(() => {
-    const artists = sortByName(tempArtists);
-    setArtists(artists);
-    setTags(tempTags);
-    setFilteredArtists(artists);
-  }, [artists, tags]);
+    const fetchdata = async () => {
+      try {
+        const response = await fetch(JSON_ENDPOINT);
+        const { tags, records } = await response.json();
+        setTags(tags);
+        const artists = sortByName(records);
+        setArtists(artists);
+        setFilteredArtists(artists);
+      } catch (err) {
+        console.error('Error - ', err);
+      }
+    };
+    fetchdata();
+  }, []);
 
   useEffect(() => {
     setShowTags(windowSize.width > MOBILE_BREAK);
@@ -41,7 +50,7 @@ function App() {
   }, [activeTags, debouncedQuery]);
 
   const artistsByTag = tags.reduce((ret, t) => {
-    const tagArtists = artists.filter((a) => a.tags?.includes(t.name));
+    const tagArtists = artists.filter((a) => a.fields?.Tags?.includes(t.name));
     return { ...ret, [t.name]: tagArtists };
   }, {});
 
@@ -65,7 +74,7 @@ function App() {
     }
     if (query.length) {
       filtered = filtered.filter((artist) =>
-        artist.name.toLowerCase().includes(query.toLowerCase())
+        artist.fields?.Name.toLowerCase().includes(query.toLowerCase())
       );
     }
     setFilteredArtists(sortByName(filtered));
@@ -118,100 +127,5 @@ function App() {
 
 export default App;
 
-const tempTags = [
-  { id: 1, name: 'Performance' },
-  { id: 2, name: 'Sculpture' },
-  { id: 3, name: 'Drawing' },
-  { id: 4, name: 'Painting' },
-  { id: 5, name: '1980s' },
-  { id: 6, name: 'Performance' },
-  { id: 7, name: 'Sculpture' },
-  { id: 8, name: 'Drawing' },
-  { id: 9, name: 'Painting' },
-  { id: 10, name: '1980s' },
-  { id: 11, name: 'Performance' },
-  { id: 12, name: 'Sculpture' },
-  { id: 13, name: 'Drawing' },
-  { id: 14, name: 'Painting' },
-  { id: 15, name: '1980s' },
-  { id: 16, name: 'Performance' },
-  { id: 17, name: 'Sculpture' },
-  { id: 18, name: 'Drawing' },
-  { id: 19, name: 'Painting' },
-  { id: 20, name: 'Painting' },
-  { id: 21, name: 'Performance' },
-  { id: 22, name: 'Sculpture' },
-  { id: 23, name: 'Drawing' },
-  { id: 24, name: 'Painting' },
-  { id: 25, name: '1980s' },
-  { id: 26, name: 'Performance' },
-  { id: 27, name: 'Sculpture' },
-  { id: 28, name: 'Drawing' },
-  { id: 29, name: 'Painting' },
-];
-
-const tempArtists = [
-  {
-    id: 1,
-    name: 'Simone Forti',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/0936f073c25da2b872272632d75e696c/911b163c',
-    tags: ['Performance', 'Sculpture'],
-  },
-  {
-    id: 2,
-    name: 'Donald Judd',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/823a03723b50d95667362db68d411800/e98496b3',
-    tags: ['Sculpture'],
-  },
-  {
-    id: 3,
-    name: 'Ai Weiwei',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/b11f2437050701a0a720633ee5bfe219/065e37d6',
-    tags: ['Performance'],
-  },
-  {
-    id: 4,
-    name: 'Adam Milner',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/27b4b8de66850f940e8c84a06a9ae8b8/fdcb6f11',
-    tags: ['Painting', 'Sculpture'],
-  },
-  {
-    id: 5,
-    name: 'Aki Sasamoto',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/65efd89bfb83773ac0beee9fa1e5bdf1/036c211c',
-    tags: ['Drawing', '1980s', 'Performance'],
-  },
-  {
-    id: 6,
-    name: 'Amber Hawk Swanson',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/58d173d0d3814af20b277ab544beeb58/d06de9d8',
-    tags: ['Performance', 'Sculpture'],
-  },
-  {
-    id: 7,
-    name: 'Andre Cadere',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/871c3abc0b395d67da68d2cfda9944d6/278f787e',
-    tags: ['Sculpture'],
-  },
-  {
-    id: 8,
-    name: 'Ann Hamilton',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/3f09f9641c5ca37430a8018a635157f9/04015541',
-    tags: ['Performance'],
-  },
-  {
-    id: 9,
-    name: 'Ann Veronica Janssens',
-    image:
-      'https://dl.airtable.com/.attachmentThumbnails/79ef14fdab6c2744efeb61803d574380/3c0c029f',
-    tags: ['Drawing', '1980s', 'Performance'],
-  },
-];
+const sortByName = (artists) =>
+  artists.sort((a, b) => (a.fields?.Name > b.fields?.Name ? 1 : -1));
