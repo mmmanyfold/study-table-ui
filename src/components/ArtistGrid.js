@@ -33,14 +33,12 @@ const ArtistCard = ({ item, mobile }) => {
 
   return (
     <div className="grid-item">
-      <div
-        className="artist-card"
-        onClick={handleSelect}
-        style={{ borderColor: selected ? '#000' : '#bbb' }}
-      >
+      <div onClick={handleSelect} className={`artist-card ${selected ? 'selected' : ''}`}>
         <div style={{ position: 'relative' }}>
           <div className="artist-thumb" style={thumbStyle}>
-            {selected && !mobile && <div className="artist-info">ABOUT THE ARTIST</div>}
+            {selected && !mobile && (
+              <div className="artist-info">{item.fields?.Info}</div>
+            )}
           </div>
           {selected && !mobile && (
             <div role="button" onClick={handleReturn} className="artist-return-btn">

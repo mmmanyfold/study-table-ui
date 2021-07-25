@@ -12,10 +12,15 @@
   flex: 1;
   margin: 1em;
   overflow: hide;
+  background-color: #fff;
   border-radius: 6px;
   border: 1px solid #bbb;
-  background-color: #fff;
   cursor: pointer;
+}
+
+.artist-card.selected {
+  border-color: #000;
+  cursor: initial;
 }
 
 .artist-thumb {
@@ -125,11 +130,6 @@
   flex-basis: 25%;
 }
 
-.grid-item.selected {
-  height: 80vh;
-  position: fixed;
-}
-
 .loading {
   padding: 8em 2em;
   display: flex;
@@ -205,18 +205,15 @@
 
 @media screen and (max-width: 800px) {
   .artist-card {
-    height: 115px;
+    height: 111px;
     display: flex;
     margin-bottom: 0;
     border-color: #000;
     border-radius: 0;
   }
-  .artist-card.selected {
-    height: 80vh;
-  }
   .artist-thumb {
     width: 70px;
-    height: 115px;
+    height: 111px;
     margin-right: 5px;
     padding: 0;
     border-radius: 0;
