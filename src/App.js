@@ -45,7 +45,7 @@ function App() {
     try {
       const response = await fetch(JSON_ENDPOINT);
       const { tags, records } = await response.json();
-      setTags(tags);
+      setTags(sortByName(tags, 'tags'));
       const artists = sortByName(records);
       setArtists(artists);
       setFilteredArtists(artists);
@@ -98,16 +98,24 @@ function App() {
     setActiveTags(updatedTags);
   };
 
-  const mobileFilterToggle = (
-    <div
-      onClick={() => setShowTags(!showTags)}
-      className="mobile-filter-toggle"
-      style={showTags ? { justifyContent: 'flex-start', marginLeft: '1em' } : {}}
-    >
-      {showTags ? '← View Artists' : '+ View Filters'}
-      {!showTags && !!activeTags.length && ` (${activeTags.length})`}
-    </div>
-  );
+  const MobileHeader = () => {
+    if (error || loading) {
+      return null;
+    }
+    return (
+      <>
+        <div
+          onClick={() => setShowTags(!showTags)}
+          className="mobile-filter-toggle"
+          style={showTags ? { justifyContent: 'flex-start', marginLeft: '1em' } : {}}
+        >
+          {showTags ? '← View Artists' : '+ View Filters'}
+          {!showTags && !!activeTags.length && ` (${activeTags.length})`}
+        </div>
+        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+      </>
+    );
+  };
 
   let content;
   if (loading) {
@@ -144,8 +152,11 @@ function App() {
 
   return (
     <div className="app">
-      {mobile && mobileFilterToggle}
-      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+      {mobile ? (
+        <MobileHeader />
+      ) : (
+        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+      )}
       {content}
     </div>
   );
@@ -153,5 +164,11 @@ function App() {
 
 export default App;
 
-const sortByName = (artists) =>
-  artists.sort((a, b) => (a.fields?.Name > b.fields?.Name ? 1 : -1));
+const sortByName = (data, type = 'artists') => {
+  if (type === 'artists') {
+    return data.sort((a, b) => (a.fields?.Name > b.fields?.Name ? 1 : -1));
+  }
+  if (type === 'tags') {
+    return data.sort((a, b) => (a.name > b.name ? 1 : -1));
+  }
+};
