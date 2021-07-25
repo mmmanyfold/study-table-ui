@@ -44,7 +44,8 @@ a {
 
 .artist-info {
   padding: 1em 1em 3em 1em;
-  line-height: 1.5em;
+  line-height: 1.35em;
+  word-break: break-word;
 }
 
 .artist-return-btn {
