@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 function ArtistGrid({ data, visible, mobile }) {
   return (
@@ -37,7 +38,9 @@ const ArtistCard = ({ item, mobile }) => {
         <div style={{ position: 'relative' }}>
           <div className="artist-thumb" style={thumbStyle}>
             {selected && !mobile && (
-              <div className="artist-info">{item.fields?.Info}</div>
+              <div className="artist-info">
+                <ReactMarkdown>{item.fields?.Info}</ReactMarkdown>
+              </div>
             )}
           </div>
           {selected && !mobile && (

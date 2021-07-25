@@ -8,6 +8,10 @@
   color: #333;
 }
 
+a {
+  color: #9883e5;
+}
+
 .artist-card {
   flex: 1;
   margin: 1em;
@@ -40,6 +44,7 @@
 
 .artist-info {
   padding: 1em 1em 3em 1em;
+  line-height: 1.5em;
 }
 
 .artist-return-btn {
@@ -63,7 +68,7 @@
 
 
 .artist-tags {
-  height: 80px;
+  height: 90px;
   font-size: 0.75em;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
