@@ -22,7 +22,7 @@ function App() {
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
-  const [showTags, setShowTags] = useState(!mobile);
+  const [showTags, setShowTags] = useState(false);
   const showArtists = !mobile || !showTags;
 
   useEffect(() => {
