@@ -70,14 +70,18 @@ function App() {
     }
     let filtered;
     if (tags.length) {
-      filtered = Object.values(
-        tags.reduce((ret, t) => {
-          artistsByTag[t.name].forEach((artist) => {
-            ret[artist.id] = artist;
-          });
-          return ret;
-        }, {})
-      );
+      filtered = artists.reduce((ret, artist) => {
+        let matchCount = 0;
+        tags.forEach((tag) => {
+          if (artist.fields.Tags?.includes(tag.name)) {
+            matchCount++;
+          }
+        });
+        if (matchCount === tags.length) {
+          return [...ret, artist];
+        }
+        return ret;
+      }, []);
     } else {
       filtered = artists;
     }
