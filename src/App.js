@@ -141,6 +141,7 @@ function App() {
           onSelect={onSelectTag}
           onClear={() => setActiveTags([])}
           visible={showTags}
+          windowSize={windowSize}
         />
         <ArtistGrid
           data={filteredArtists}

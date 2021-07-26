@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filters = ({ data, active, visible, onSelect, onClear }) => {
+const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
   const isActive = (tag) => {
     return active.some((t) => t.id === tag.id);
   };
@@ -14,7 +14,10 @@ const Filters = ({ data, active, visible, onSelect, onClear }) => {
   };
 
   return (
-    <div className="filters-scrollview" style={!visible ? { display: 'none' } : null}>
+    <div
+      className="filters-scrollview"
+      style={{ height: windowSize.height, display: visible ? 'block' : 'none' }}
+    >
       <div className="filters-container">
         <div className="filters-header">
           {active.length ? (

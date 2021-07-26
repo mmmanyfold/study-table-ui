@@ -6,6 +6,7 @@
   font-weight: 400;
   font-size: 1em;
   color: #333;
+  background-color: #fff;
 }
 
 a {
@@ -89,8 +90,8 @@ a {
 
 .filters-scrollview {
   width: 200px;
-  height: 100vh;
   padding-left: 1em;
+  background-color: #fff;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -114,6 +115,7 @@ a {
 .grid-scrollview {
   height: 100vh;
   flex: 1;
+  background-color: #fff;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -147,6 +149,7 @@ a {
   width: 100%;
   display: flex;
   align-items: flex-start;
+  background-color: #fff;
 }
 
 .no-results {
@@ -174,12 +177,14 @@ a {
   font-family: 'Martel Sans', sans-serif;
   font-size: 1.2em;
   border: 0;
+  background-color: #fff;
 }
 
 .search-clear-icon {
   display: flex;
   padding: 1em;
   cursor: pointer;
+  background-color: #fff;
 }
 
 .tag {
