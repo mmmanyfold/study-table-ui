@@ -57,6 +57,8 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
   const showImage = mobile || !selected;
   const thumbStyle = getThumbnailStyle(showImage, item);
 
+  const { Name: name, Info: info, Tags: tags } = item.fields;
+
   return (
     <div className="grid-item">
       <div onClick={handleSelect} className={`artist-card ${selected ? 'selected' : ''}`}>
@@ -64,7 +66,11 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
           <div className="artist-thumb" style={thumbStyle}>
             {selected && !mobile && (
               <div className="artist-info">
-                <ReactMarkdown>{item.fields?.Info}</ReactMarkdown>
+                {info ? (
+                  <ReactMarkdown>{info}</ReactMarkdown>
+                ) : (
+                  'No information at this time.'
+                )}
               </div>
             )}
           </div>
@@ -75,9 +81,9 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
           )}
         </div>
         <div className="artist-heading">
-          <div className="artist-name">{item.fields?.Name}</div>
+          <div className="artist-name">{name}</div>
           <div className="artist-tags">
-            {item.fields?.Tags?.map((tag, i) => (
+            {tags?.map((tag, i) => (
               <div key={`${tag}-${i}`} className="artist-tag">
                 {tag}
               </div>
@@ -108,7 +114,7 @@ const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
         <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }}></div>
         <div className="artist-mobile-info">
           <div className="artist-mobile-name">{name}</div>
-          <ReactMarkdown>{info}</ReactMarkdown>
+          {info ? <ReactMarkdown>{info}</ReactMarkdown> : 'No information at this time.'}
         </div>
       </div>
     </div>
