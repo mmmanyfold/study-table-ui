@@ -30,7 +30,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setShowTags(windowSize.width > MOBILE_BREAK);
+    if (windowSize.width > MOBILE_BREAK) {
+      setShowTags(true);
+    }
   }, [windowSize]);
 
   useEffect(() => {
