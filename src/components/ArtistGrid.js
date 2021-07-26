@@ -1,28 +1,52 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-function ArtistGrid({ data, visible, mobile }) {
+function ArtistGrid({ data, visible, mobile, windowSize }) {
+  const [selectedOnMobile, setSelectedOnMobile] = useState(null);
+
+  const onMobileSelect = (artist) => {
+    setSelectedOnMobile(artist);
+  };
+
+  const onMobileReturn = () => {
+    setSelectedOnMobile(null);
+  };
+
   return (
     <div className="grid-scrollview" style={!visible ? { display: 'none' } : null}>
       <div className="grid">
         {data?.map((item) => (
-          <ArtistCard key={item.id} item={item} mobile={mobile} />
+          <ArtistCard
+            key={item.id}
+            item={item}
+            mobile={mobile}
+            onMobileSelect={onMobileSelect}
+          />
         ))}
         {!data.length && (
           <div className="no-results">No artists match your criteria.</div>
         )}
       </div>
+      <ArtistViewMobile
+        artist={selectedOnMobile}
+        windowSize={windowSize}
+        onReturn={onMobileReturn}
+      />
     </div>
   );
 }
 
 export default ArtistGrid;
 
-const ArtistCard = ({ item, mobile }) => {
+const ArtistCard = ({ item, mobile, onMobileSelect }) => {
   const [selected, setSelected] = useState(false);
 
   const handleSelect = () => {
-    setSelected(item);
+    if (mobile) {
+      onMobileSelect(item);
+    } else {
+      setSelected(item);
+    }
   };
 
   const handleReturn = (e) => {
@@ -30,7 +54,10 @@ const ArtistCard = ({ item, mobile }) => {
     setSelected(null);
   };
 
-  const thumbStyle = getThumbnailStyle(mobile, selected, item);
+  const showImage = mobile || !selected;
+  const thumbStyle = getThumbnailStyle(showImage, item);
+
+  const { Name: name, Info: info, Tags: tags } = item.fields;
 
   return (
     <div className="grid-item">
@@ -39,7 +66,11 @@ const ArtistCard = ({ item, mobile }) => {
           <div className="artist-thumb" style={thumbStyle}>
             {selected && !mobile && (
               <div className="artist-info">
-                <ReactMarkdown>{item.fields?.Info}</ReactMarkdown>
+                {info ? (
+                  <ReactMarkdown>{info}</ReactMarkdown>
+                ) : (
+                  'No information at this time.'
+                )}
               </div>
             )}
           </div>
@@ -50,9 +81,9 @@ const ArtistCard = ({ item, mobile }) => {
           )}
         </div>
         <div className="artist-heading">
-          <div className="artist-name">{item.fields?.Name}</div>
+          <div className="artist-name">{name}</div>
           <div className="artist-tags">
-            {item.fields?.Tags?.map((tag, i) => (
+            {tags?.map((tag, i) => (
               <div key={`${tag}-${i}`} className="artist-tag">
                 {tag}
               </div>
@@ -64,8 +95,34 @@ const ArtistCard = ({ item, mobile }) => {
   );
 };
 
-const getThumbnailStyle = (mobile, selected, item) => {
-  if (!mobile && selected) {
+const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
+  if (!artist) {
+    return null;
+  }
+
+  const { Name: name, Info: info } = artist.fields;
+
+  const thumbStyle = getThumbnailStyle(true, artist);
+  const viewAreaHeight = windowSize.height - 100;
+
+  return (
+    <div className="artist-mobile-view" style={{ height: viewAreaHeight }}>
+      <div className="artist-mobile-return" role="button" onClick={onReturn}>
+        ← Back to Artists
+      </div>
+      <div className="artist-mobile-card">
+        <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }}></div>
+        <div className="artist-mobile-info">
+          <div className="artist-mobile-name">{name}</div>
+          {info ? <ReactMarkdown>{info}</ReactMarkdown> : 'No information at this time.'}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const getThumbnailStyle = (showImage, item) => {
+  if (!showImage) {
     return null;
   }
   const images = item?.fields?.Image;
