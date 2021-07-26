@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/study-table-ui/static/css/main.5d1b1f9c.chunk.css",
-    "main.js": "/study-table-ui/static/js/main.4de9e621.chunk.js",
-    "main.js.map": "/study-table-ui/static/js/main.4de9e621.chunk.js.map",
+    "main.js": "/study-table-ui/static/js/main.88272e63.chunk.js",
+    "main.js.map": "/study-table-ui/static/js/main.88272e63.chunk.js.map",
     "runtime-main.js": "/study-table-ui/static/js/runtime-main.1e25ef94.js",
     "runtime-main.js.map": "/study-table-ui/static/js/runtime-main.1e25ef94.js.map",
     "static/js/2.86946512.chunk.js": "/study-table-ui/static/js/2.86946512.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.1e25ef94.js",
     "static/js/2.86946512.chunk.js",
     "static/css/main.5d1b1f9c.chunk.css",
-    "static/js/main.4de9e621.chunk.js"
+    "static/js/main.88272e63.chunk.js"
   ]
 }
