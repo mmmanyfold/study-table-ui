@@ -69,7 +69,7 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
                 {info ? (
                   <ReactMarkdown>{info}</ReactMarkdown>
                 ) : (
-                  'No information at this time.'
+                  <p>No information at this time.</p>
                 )}
               </div>
             )}
@@ -114,7 +114,11 @@ const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
         <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }}></div>
         <div className="artist-mobile-info">
           <div className="artist-mobile-name">{name}</div>
-          {info ? <ReactMarkdown>{info}</ReactMarkdown> : 'No information at this time.'}
+          {info ? (
+            <ReactMarkdown>{info}</ReactMarkdown>
+          ) : (
+            <p>No information at this time.</p>
+          )}
         </div>
       </div>
     </div>
