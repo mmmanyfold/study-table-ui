@@ -58,11 +58,6 @@ function App() {
     }
   };
 
-  const artistsByTag = tags.reduce((ret, t) => {
-    const tagArtists = artists.filter((a) => a.fields?.Tags?.includes(t.name));
-    return { ...ret, [t.name]: tagArtists };
-  }, {});
-
   const handleFilter = (tags, query) => {
     if (!tags.length && !query) {
       setFilteredArtists(artists);
@@ -104,24 +99,18 @@ function App() {
     setActiveTags(updatedTags);
   };
 
-  const MobileHeader = () => {
-    if (error || loading) {
-      return null;
-    }
-    return (
-      <>
-        <div
-          onClick={() => setShowTags(!showTags)}
-          className="mobile-filter-toggle"
-          style={showTags ? { justifyContent: 'flex-start', marginLeft: '1em' } : {}}
-        >
-          {showTags ? '← View Artists' : '+ View Filters'}
-          {!showTags && !!activeTags.length && ` (${activeTags.length})`}
-        </div>
-        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
-      </>
-    );
-  };
+  const mobileHeader =
+    <>
+      <div
+        onClick={() => setShowTags(!showTags)}
+        className="mobile-filter-toggle"
+        style={showTags ? { justifyContent: 'flex-start', marginLeft: '1em' } : {}}
+      >
+        {showTags ? '← View Artists' : '+ View Filters'}
+        {!showTags && !!activeTags.length && ` (${activeTags.length})`}
+      </div>
+      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+    </>
 
   let content;
   if (loading) {
@@ -160,7 +149,7 @@ function App() {
   return (
     <div className="app">
       {mobile ? (
-        <MobileHeader />
+        !loading && !error && mobileHeader
       ) : (
         <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
       )}
