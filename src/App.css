@@ -70,7 +70,7 @@ a {
 
 
 .artist-tags {
-  height: 90px;
+  height: 101px;
   font-size: 0.75em;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
