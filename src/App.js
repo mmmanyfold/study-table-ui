@@ -106,7 +106,7 @@ function App() {
         className="mobile-filter-toggle"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
-        {showTags ? '← Back to Artists' : '+ View Tags'}
+        {showTags ? '← Back to Artists' : '+ Select Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
       {!showTags && <SearchBar value={query} onChange={setQuery} />}
