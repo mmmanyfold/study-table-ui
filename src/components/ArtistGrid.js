@@ -67,7 +67,7 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
             {selected && !mobile && (
               <div className="artist-info">
                 {info ? (
-                  <ReactMarkdown>{info}</ReactMarkdown>
+                  <ReactMarkdown linkTarget={"_blank"}>{info}</ReactMarkdown>
                 ) : (
                   <p>No information at this time.</p>
                 )}
@@ -111,11 +111,11 @@ const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
         ← Back to Artists
       </div>
       <div className="artist-mobile-card">
-        <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }}></div>
+        <div style={{...thumbStyle, height: (viewAreaHeight - 32) * 0.5}}/>
         <div className="artist-mobile-info">
           <div className="artist-mobile-name">{name}</div>
           {info ? (
-            <ReactMarkdown>{info}</ReactMarkdown>
+            <ReactMarkdown linkTarget={"_blank"}>{info}</ReactMarkdown>
           ) : (
             <p>No information at this time.</p>
           )}
