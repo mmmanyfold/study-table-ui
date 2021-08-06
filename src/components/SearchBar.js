@@ -11,9 +11,11 @@ const SearchBar = ({ value, onChange, onClear }) => {
         placeholder="Search"
         className="search-input"
       />
-      <div role="button" onClick={onClear} className="search-clear-icon">
-        <img src={CloseIcon} alt="X Icon" />
-      </div>
+      {onClear && (
+        <div role="button" onClick={onClear} className="search-clear-icon">
+          <img src={CloseIcon} alt="X Icon" />
+        </div>
+      )}
     </div>
   );
 };

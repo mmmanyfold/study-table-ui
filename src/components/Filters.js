@@ -1,4 +1,5 @@
 import React from 'react';
+import CloseIcon from '../assets/close-icon.svg';
 
 const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
   const isActive = (tag) => {
@@ -22,10 +23,11 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
         <div className="filters-header">
           {active.length ? (
             <div role="button" onClick={onClear} style={{ cursor: 'pointer' }}>
-              Clear All {!!active.length && ` (${active.length})`}
+              Clear all ({active.length})
+              <img src={CloseIcon} alt="X Icon" style={{ marginLeft: '8px' }} />
             </div>
           ) : (
-            <div>Filter by Tags</div>
+            <div>Filter by tags</div>
           )}
         </div>
         {data.map((tag) => (
