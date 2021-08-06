@@ -25,6 +25,8 @@ function App() {
   const [showTags, setShowTags] = useState(false);
   const showArtists = !mobile || !showTags;
 
+  // useEffects
+
   useEffect(() => {
     fetchdata();
   }, []);
@@ -40,6 +42,8 @@ function App() {
       handleFilter(activeTags, debouncedQuery);
     }
   }, [activeTags, debouncedQuery]);
+
+  // handlers
 
   const fetchdata = async () => {
     setError(false);
@@ -99,19 +103,28 @@ function App() {
     setActiveTags(updatedTags);
   };
 
-  const mobileHeader = (
-    <>
-      <div
-        onClick={() => setShowTags(!showTags)}
-        className="mobile-filter-toggle"
-        style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
-      >
-        {showTags ? '← Back to Artists' : '+ Select Tags'}
-        {!showTags && !!activeTags.length && ` (${activeTags.length})`}
-      </div>
-      {!showTags && <SearchBar value={query} onChange={setQuery} />}
-    </>
-  );
+  // components
+
+  let header;
+  if (mobile) {
+    if (!loading && !error) {
+      header = (
+        <>
+          <div
+            onClick={() => setShowTags(!showTags)}
+            className="mobile-filter-toggle"
+            style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
+          >
+            {showTags ? '← Back to Artists' : '+ Select Tags'}
+            {showArtists && !!activeTags.length && ` (${activeTags.length})`}
+          </div>
+          {showArtists && <SearchBar value={query} onChange={setQuery} />}
+        </>
+      );
+    }
+  } else {
+    header = <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />;
+  }
 
   let content;
   if (loading) {
@@ -147,14 +160,21 @@ function App() {
     );
   }
 
+  const contentPaddingTop = mobile ? (showTags ? '51px' : '101px') : '4em';
+
   return (
     <div className="app">
-      {mobile ? (
-        !loading && !error && mobileHeader
-      ) : (
-        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
-      )}
-      {content}
+      {header}
+      <div style={{ paddingTop: contentPaddingTop }}>
+        {/* TODO build this out */}
+        {(debouncedQuery || !!activeTags.length) && (
+          <div className="selection-container">
+            {debouncedQuery && <div>Showing results for '{debouncedQuery}'</div>}
+            {!!activeTags.length && 'Tags'}
+          </div>
+        )}
+        {content}
+      </div>
     </div>
   );
 }

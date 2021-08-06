@@ -90,6 +90,7 @@ a {
 
 .filters-scrollview {
   width: 200px;
+  padding-top: 1em;
   background-color: #fff;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
@@ -113,8 +114,8 @@ a {
 }
 
 .grid-scrollview {
-  height: 100vh;
   flex: 1;
+  padding-top: 0.75em;
   background-color: #fff;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
@@ -130,7 +131,8 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 4.5em 1em 1em 1em;
+  padding: 0 1em 1em 1em;
+  margin-bottom: 10em;
 }
 
 .grid-item {
@@ -156,6 +158,10 @@ a {
   margin-top: 3em;
   margin-left: 2em;
   font-size: 1.5em;
+}
+
+.selection-container {
+  border-bottom: 1px solid #bbb;
 }
 
 .search-container {
@@ -248,7 +254,7 @@ a {
   }
   .artist-mobile-view {
     position: absolute;
-    top: 101px;
+    top: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -297,8 +303,10 @@ a {
     margin-top: 51px;
     border-color: #000;
   }
+  .grid-scrollview {
+    padding-top: 0;
+  }
   .grid {
-    margin: 104px 0 16px 0;
     padding: 0;
   }
   .grid-item {
@@ -323,6 +331,9 @@ a {
     margin-left: 0;
     font-size: 1em;
     text-align: center;
+  }
+  .selection-container {
+    border-color: #000;
   }
   .search-container {
     width: 100%;
