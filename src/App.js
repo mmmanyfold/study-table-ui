@@ -99,7 +99,7 @@ function App() {
     setActiveTags(updatedTags);
   };
 
-  const mobileHeader =
+  const mobileHeader = (
     <>
       <div
         onClick={() => setShowTags(!showTags)}
@@ -109,8 +109,9 @@ function App() {
         {showTags ? '← View Artists' : '+ View Filters'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
-      <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+      <SearchBar value={query} onChange={setQuery} />
     </>
+  );
 
   let content;
   if (loading) {
