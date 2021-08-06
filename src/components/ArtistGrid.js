@@ -138,7 +138,8 @@ const getThumbnailStyle = (showImage, item) => {
   const url = images[0].thumbnails.large.url;
   return {
     backgroundImage: `url(${url})`,
-    backgroundSize: 'cover',
+    backgroundSize: 'contain',
     backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
   };
 };
