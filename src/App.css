@@ -90,7 +90,6 @@ a {
 
 .filters-scrollview {
   width: 200px;
-  padding-left: 1em;
   background-color: #fff;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
@@ -102,14 +101,15 @@ a {
 }
 
 .filters-container {
-  margin-top: 5.25em;
-  margin-bottom: 1em;
+  margin-bottom: 10em;
 }
 
 .filters-header {
   display: flex;
-  padding: 0 0 0.5em 1em;
+  margin-top: 4.5em;
+  padding: 0 0 0.4em 1.5em;
   font-weight: 600;
+  border-bottom: 1px solid #bbb;
 }
 
 .grid-scrollview {
@@ -188,7 +188,7 @@ a {
 
 .tag {
   display: block;
-  padding: 0.55em 1em 0.25em 1em;
+  padding: 0.55em 1em 0.25em 1.5em;
   cursor: pointer;
   background-color: #fff;
   border: 1px solid #fff;
@@ -289,14 +289,13 @@ a {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
-    margin-bottom: 0;
   }
   .filters-header {
     width: 100%;
     justify-content: center;
-    padding: 0;
-    margin: 1em 0 0.5em 0;
+    padding: 13px 0 7px 0;
+    margin-top: 51px;
+    border-color: #000;
   }
   .grid {
     margin: 104px 0 16px 0;
