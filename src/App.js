@@ -36,10 +36,24 @@ function App() {
   }, [windowSize]);
 
   useEffect(() => {
-    if (activeTags || debouncedQuery) {
-      handleFilter(activeTags, debouncedQuery);
+    if (activeTags.length) {
+      setQuery('');
+      const filtered = getFilteredByTags(activeTags, artists);
+      setFilteredArtists(sortByName(filtered));
+    } else if (!debouncedQuery.length) {
+      setFilteredArtists(artists);
     }
-  }, [activeTags, debouncedQuery]);
+  }, [activeTags]);
+
+  useEffect(() => {
+    if (debouncedQuery.length) {
+      setActiveTags([]);
+      const filtered = getFilteredByQuery(debouncedQuery, tags, artists, artistsByTag);
+      setFilteredArtists(sortByName(filtered));
+    } else if (!activeTags.length) {
+      setFilteredArtists(artists);
+    }
+  }, [debouncedQuery]);
 
   const fetchdata = async () => {
     setError(false);
@@ -58,35 +72,10 @@ function App() {
     }
   };
 
-  const handleFilter = (tags, query) => {
-    if (!tags.length && !query) {
-      setFilteredArtists(artists);
-      return;
-    }
-    let filtered;
-    if (tags.length) {
-      filtered = artists.reduce((ret, artist) => {
-        let matchCount = 0;
-        tags.forEach((tag) => {
-          if (artist.fields.Tags?.includes(tag.name)) {
-            matchCount++;
-          }
-        });
-        if (matchCount === tags.length) {
-          return [...ret, artist];
-        }
-        return ret;
-      }, []);
-    } else {
-      filtered = artists;
-    }
-    if (query.length) {
-      filtered = filtered.filter((artist) =>
-        artist.fields?.Name.toLowerCase().includes(query.toLowerCase())
-      );
-    }
-    setFilteredArtists(sortByName(filtered));
-  };
+  const artistsByTag = tags.reduce((ret, t) => {
+    const tagArtists = artists.filter((a) => a.fields?.Tags?.includes(t.name));
+    return { ...ret, [t.name]: tagArtists };
+  }, {});
 
   const onSelectTag = (tag) => {
     const isActive = activeTags.some((t) => t.id === tag.id);
@@ -106,7 +95,7 @@ function App() {
         className="mobile-filter-toggle"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
-        {showTags ? '← Back to Artists' : '+ View Tags'}
+        {showTags ? '← View Artists' : '+ View Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
       {!showTags && <SearchBar value={query} onChange={setQuery} />}
@@ -168,4 +157,38 @@ const sortByName = (data, type = 'artists') => {
   if (type === 'tags') {
     return data.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
+};
+
+const dedupeObjectsById = (objects) => {
+  return [...new Map(objects.map((x) => [x.id, x])).values()];
+};
+
+const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
+  const str = query.toLowerCase();
+  const matchingTags = tags.filter((t) => t.name.toLowerCase().includes(str));
+  const resultsFromTags = matchingTags.reduce(
+    (ret, t) => ret.concat(artistsByTag[t.name]),
+    []
+  );
+  const resultsFromNames = artists.filter((artist) =>
+    artist.fields.Name.toLowerCase().includes(str)
+  );
+  const results = dedupeObjectsById([...resultsFromTags, ...resultsFromNames]);
+  return sortByName(results);
+};
+
+const getFilteredByTags = (selectedTags, artists) => {
+  const results = artists.reduce((ret, artist) => {
+    let matchCount = 0;
+    selectedTags.forEach((tag) => {
+      if (artist.fields.Tags?.includes(tag.name)) {
+        matchCount++;
+      }
+    });
+    if (matchCount === selectedTags.length) {
+      return [...ret, artist];
+    }
+    return ret;
+  }, []);
+  return sortByName(results);
 };
