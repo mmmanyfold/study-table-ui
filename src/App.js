@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
-import Filters from './components/Filters';
+import TagsColumn from './components/TagsColumn';
 import SearchBar from './components/SearchBar';
 import './App.scss';
 
@@ -88,7 +88,7 @@ function App() {
     <>
       <div
         onClick={() => setShowTags(!showTags)}
-        className="mobile-filter-toggle"
+        className="mobile-tag-toggle"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
         {showTags ? '← View Artists' : '+ View Tags'}
@@ -114,7 +114,7 @@ function App() {
   } else {
     content = (
       <div className="main">
-        <Filters
+        <TagsColumn
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
@@ -198,16 +198,16 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
   return sortByName(results);
 };
 
-const getFilteredByTags = (selectedTags, artists) => {
-  const filterCount = selectedTags.length;
+const getFilteredByTags = (tags, artists) => {
+  const activeTagCount = tags.length;
   const results = artists.reduce((ret, artist) => {
     let matchCount = 0;
-    selectedTags.forEach((tag) => {
+    tags.forEach((tag) => {
       if (artist.fields.Tags?.includes(tag.name)) {
         matchCount++;
       }
     });
-    if (matchCount === filterCount) {
+    if (matchCount === activeTagCount) {
       return [...ret, artist];
     }
     return ret;

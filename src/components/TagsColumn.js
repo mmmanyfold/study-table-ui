@@ -1,13 +1,13 @@
 import React from 'react';
 import CloseIcon from '../assets/close-icon.svg';
 
-const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
+const TagsColumn = ({ data, active, visible, windowSize, onSelect, onClear }) => {
   const activeCount = active.length;
 
   return (
     <div>
       {visible && (
-        <div className="filters-header">
+        <div className="tags-header">
           {activeCount ? (
             <div role="button" onClick={onClear} style={{ cursor: 'pointer' }}>
               Clear all ({activeCount})
@@ -19,10 +19,10 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
         </div>
       )}
       <div
-        className="filters-scrollview"
+        className="tags-scrollview"
         style={{ height: windowSize.height, display: visible ? 'block' : 'none' }}
       >
-        <div className="filters-container">
+        <div className="tags-container">
           {data.map((tag) => (
             <div key={tag.id} className="tag-wrapper">
               <input
@@ -47,7 +47,7 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
   );
 };
 
-export default Filters;
+export default TagsColumn;
 
 const isActive = (item, activeItems) => {
   return activeItems.some((t) => t.id === item.id);
