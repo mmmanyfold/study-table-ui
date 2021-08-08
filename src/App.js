@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useDebounce from './hooks/useDebounce';
 import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
 import Filters from './components/Filters';
@@ -18,7 +17,6 @@ function App() {
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 500);
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
@@ -34,26 +32,6 @@ function App() {
       setShowTags(true);
     }
   }, [windowSize]);
-
-  useEffect(() => {
-    if (activeTags.length) {
-      setQuery('');
-      const filtered = getFilteredByTags(activeTags, artists);
-      setFilteredArtists(sortByName(filtered));
-    } else if (!debouncedQuery.length) {
-      setFilteredArtists(artists);
-    }
-  }, [activeTags]);
-
-  useEffect(() => {
-    if (debouncedQuery.length) {
-      setActiveTags([]);
-      const filtered = getFilteredByQuery(debouncedQuery, tags, artists, artistsByTag);
-      setFilteredArtists(sortByName(filtered));
-    } else if (!activeTags.length) {
-      setFilteredArtists(artists);
-    }
-  }, [debouncedQuery]);
 
   const fetchdata = async () => {
     setError(false);
@@ -78,6 +56,7 @@ function App() {
   }, {});
 
   const onSelectTag = (tag) => {
+    setQuery('');
     const isActive = activeTags.some((t) => t.id === tag.id);
     let updatedTags;
     if (isActive) {
@@ -86,6 +65,23 @@ function App() {
       updatedTags = [...activeTags, tag];
     }
     setActiveTags(updatedTags);
+    if (updatedTags.length) {
+      const filtered = getFilteredByTags(updatedTags, artists);
+      setFilteredArtists(filtered);
+    } else {
+      setFilteredArtists(artists);
+    }
+  };
+
+  const onChangeSearch = (text) => {
+    setActiveTags([]);
+    setQuery(text);
+    if (text.length) {
+      const filtered = getFilteredByQuery(text, tags, artists, artistsByTag);
+      setFilteredArtists(filtered);
+    } else {
+      setFilteredArtists(artists);
+    }
   };
 
   const mobileHeader = (
@@ -141,7 +137,11 @@ function App() {
       {mobile ? (
         !loading && !error && mobileHeader
       ) : (
-        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+        <SearchBar
+          value={query}
+          onChange={onChangeSearch}
+          onClear={() => onChangeSearch('')}
+        />
       )}
       {content}
     </div>
