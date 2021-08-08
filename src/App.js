@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useDebounce from './hooks/useDebounce';
 import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
 import Filters from './components/Filters';
@@ -18,7 +17,6 @@ function App() {
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 500);
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
@@ -34,12 +32,6 @@ function App() {
       setShowTags(true);
     }
   }, [windowSize]);
-
-  useEffect(() => {
-    if (activeTags || debouncedQuery) {
-      handleFilter(activeTags, debouncedQuery);
-    }
-  }, [activeTags, debouncedQuery]);
 
   const fetchdata = async () => {
     setError(false);
@@ -58,37 +50,13 @@ function App() {
     }
   };
 
-  const handleFilter = (tags, query) => {
-    if (!tags.length && !query) {
-      setFilteredArtists(artists);
-      return;
-    }
-    let filtered;
-    if (tags.length) {
-      filtered = artists.reduce((ret, artist) => {
-        let matchCount = 0;
-        tags.forEach((tag) => {
-          if (artist.fields.Tags?.includes(tag.name)) {
-            matchCount++;
-          }
-        });
-        if (matchCount === tags.length) {
-          return [...ret, artist];
-        }
-        return ret;
-      }, []);
-    } else {
-      filtered = artists;
-    }
-    if (query.length) {
-      filtered = filtered.filter((artist) =>
-        artist.fields?.Name.toLowerCase().includes(query.toLowerCase())
-      );
-    }
-    setFilteredArtists(sortByName(filtered));
-  };
+  const artistsByTag = tags.reduce((ret, t) => {
+    const tagArtists = artists.filter((a) => a.fields?.Tags?.includes(t.name));
+    return { ...ret, [t.name]: tagArtists };
+  }, {});
 
   const onSelectTag = (tag) => {
+    setQuery('');
     const isActive = activeTags.some((t) => t.id === tag.id);
     let updatedTags;
     if (isActive) {
@@ -97,6 +65,23 @@ function App() {
       updatedTags = [...activeTags, tag];
     }
     setActiveTags(updatedTags);
+    if (updatedTags.length) {
+      const filtered = getFilteredByTags(updatedTags, artists);
+      setFilteredArtists(filtered);
+    } else {
+      setFilteredArtists(artists);
+    }
+  };
+
+  const onChangeSearch = (text) => {
+    setActiveTags([]);
+    setQuery(text);
+    if (text.length) {
+      const filtered = getFilteredByQuery(text, tags, artists, artistsByTag);
+      setFilteredArtists(filtered);
+    } else {
+      setFilteredArtists(artists);
+    }
   };
 
   const mobileHeader = (
@@ -106,7 +91,7 @@ function App() {
         className="mobile-filter-toggle"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
-        {showTags ? '← Back to Artists' : '+ View Tags'}
+        {showTags ? '← View Artists' : '+ View Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
       {!showTags && <SearchBar value={query} onChange={setQuery} />}
@@ -152,7 +137,11 @@ function App() {
       {mobile ? (
         !loading && !error && mobileHeader
       ) : (
-        <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
+        <SearchBar
+          value={query}
+          onChange={onChangeSearch}
+          onClear={() => onChangeSearch('')}
+        />
       )}
       {content}
     </div>
@@ -168,4 +157,39 @@ const sortByName = (data, type = 'artists') => {
   if (type === 'tags') {
     return data.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
+};
+
+const dedupeObjectsById = (objects) => {
+  return [...new Map(objects.map((x) => [x.id, x])).values()];
+};
+
+const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
+  const str = query.toLowerCase();
+  const matchingTags = tags.filter((t) => t.name.toLowerCase().includes(str));
+  const resultsFromTags = matchingTags.reduce(
+    (ret, t) => ret.concat(artistsByTag[t.name]),
+    []
+  );
+  const resultsFromNames = artists.filter((artist) =>
+    artist.fields.Name.toLowerCase().includes(str)
+  );
+  const results = dedupeObjectsById([...resultsFromTags, ...resultsFromNames]);
+  return sortByName(results);
+};
+
+const getFilteredByTags = (selectedTags, artists) => {
+  const filterCount = selectedTags.length;
+  const results = artists.reduce((ret, artist) => {
+    let matchCount = 0;
+    selectedTags.forEach((tag) => {
+      if (artist.fields.Tags?.includes(tag.name)) {
+        matchCount++;
+      }
+    });
+    if (matchCount === filterCount) {
+      return [...ret, artist];
+    }
+    return ret;
+  }, []);
+  return sortByName(results);
 };

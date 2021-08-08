@@ -2,25 +2,15 @@ import React from 'react';
 import CloseIcon from '../assets/close-icon.svg';
 
 const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
-  const isActive = (tag) => {
-    return active.some((t) => t.id === tag.id);
-  };
-
-  const tagStyle = (tag) => {
-    let style = 'tag';
-    if (isActive(tag)) {
-      style += ' selected';
-    }
-    return style;
-  };
+  const activeCount = active.length;
 
   return (
     <div>
       {visible && (
         <div className="filters-header">
-          {active.length ? (
+          {activeCount ? (
             <div role="button" onClick={onClear} style={{ cursor: 'pointer' }}>
-              Clear all ({active.length})
+              Clear all ({activeCount})
               <img src={CloseIcon} alt="X Icon" style={{ marginLeft: '8px' }} />
             </div>
           ) : (
@@ -39,13 +29,13 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
                 type="checkbox"
                 id={tag.id}
                 name="tag"
-                value={isActive(tag)}
+                value={isActive(tag, active)}
                 style={{ display: 'none' }}
               />
               <div
                 htmlFor={tag.id}
                 onClick={() => onSelect(tag)}
-                className={tagStyle(tag)}
+                className={tagStyle(tag, active)}
               >
                 <div>{tag.name}</div>
               </div>
@@ -58,3 +48,15 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
 };
 
 export default Filters;
+
+const isActive = (item, activeItems) => {
+  return activeItems.some((t) => t.id === item.id);
+};
+
+const tagStyle = (tag, activeTags) => {
+  let style = 'tag';
+  if (isActive(tag, activeTags)) {
+    style += ' selected';
+  }
+  return style;
+};
