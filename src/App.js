@@ -171,10 +171,16 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
   const resultsFromNames = artists.filter((artist) =>
     artist.fields.Name.toLowerCase().includes(str)
   );
+  const multiwordTagMatches = multiword
+    ? tags.filter((t) => str.includes(t.name.toLowerCase()))
+    : [];
 
   let resultsFromTags;
+
   if (resultsFromNames.length && multiword) {
     resultsFromTags = [];
+  } else if (multiwordTagMatches.length) {
+    resultsFromTags = getFilteredByTags(multiwordTagMatches, artists);
   } else if (multiword) {
     const relevantTags = words.reduce((ret, word) => {
       const wordMatches = tags.filter((t) => word.includes(t.name.toLowerCase()));
