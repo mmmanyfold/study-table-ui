@@ -13,11 +13,7 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
   };
 
   return (
-    <div
-      className="grid-scrollview"
-      style={{ height: windowSize.height, display: visible ? 'block' : 'none' }}
-      tabIndex="0"
-    >
+    <>
       <div className="grid">
         {data?.map((item, i) => (
           <ArtistCard
@@ -36,7 +32,7 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
         windowSize={windowSize}
         onReturn={onMobileReturn}
       />
-    </div>
+    </>
   );
 }
 

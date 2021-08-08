@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
 import TagsColumn from './components/TagsColumn';
@@ -18,6 +18,9 @@ function App() {
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
 
+  const gridRef = useRef(null);
+  const [gridScroll, setGridScroll] = useState(null);
+
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
   const [showTags, setShowTags] = useState(false);
@@ -32,6 +35,14 @@ function App() {
       setShowTags(true);
     }
   }, [windowSize]);
+
+  useEffect(() => {
+    const onScroll = (e) => {
+      setGridScroll(e.target.documentElement?.scrollTop);
+    };
+    gridRef?.current?.addEventListener('scroll', onScroll);
+    return () => gridRef?.current?.removeEventListener('scroll', onScroll);
+  }, [gridScroll, gridRef]);
 
   const fetchdata = async () => {
     setError(false);
@@ -94,7 +105,9 @@ function App() {
         {showTags ? '← View Artists' : '+ View Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
-      {!showTags && <SearchBar value={query} onChange={setQuery} />}
+      {!showTags && (
+        <SearchBar value={query} onChange={setQuery} visible={gridScroll > 50} />
+      )}
     </>
   );
 
@@ -125,12 +138,22 @@ function App() {
           visible={showTags}
           windowSize={windowSize}
         />
-        <ArtistGrid
-          data={filteredArtists}
-          visible={showArtists}
-          windowSize={windowSize}
-          mobile={mobile}
-        />
+        <div
+          ref={(el) => {
+            setGridScroll(el?.scrollTop);
+            gridRef.current = el;
+          }}
+          className="grid-scrollview"
+          style={{ height: windowSize.height, display: showArtists ? 'block' : 'none' }}
+          tabIndex="0"
+        >
+          <ArtistGrid
+            data={filteredArtists}
+            visible={showArtists}
+            windowSize={windowSize}
+            mobile={mobile}
+          />
+        </div>
       </div>
     );
   }
