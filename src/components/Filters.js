@@ -1,11 +1,11 @@
 import React from 'react';
 import CloseIcon from '../assets/close-icon.svg';
 
-const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
-  const isActive = (tag) => {
-    return active.some((t) => t.id === tag.id);
-  };
+const isActive = (item, activeItems) => {
+  return activeItems.some((t) => t.id === item.id);
+};
 
+const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
   const tagStyle = (tag) => {
     let style = 'tag';
     if (isActive(tag)) {
@@ -14,13 +14,15 @@ const Filters = ({ data, active, visible, windowSize, onSelect, onClear }) => {
     return style;
   };
 
+  const activeCount = active.length;
+
   return (
     <div>
       {visible && (
         <div className="filters-header">
-          {active.length ? (
+          {activeCount ? (
             <div role="button" onClick={onClear} style={{ cursor: 'pointer' }}>
-              Clear all ({active.length})
+              Clear all ({activeCount})
               <img src={CloseIcon} alt="X Icon" style={{ marginLeft: '8px' }} />
             </div>
           ) : (

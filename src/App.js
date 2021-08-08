@@ -178,6 +178,7 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
 };
 
 const getFilteredByTags = (selectedTags, artists) => {
+  const filterCount = selectedTags.length;
   const results = artists.reduce((ret, artist) => {
     let matchCount = 0;
     selectedTags.forEach((tag) => {
@@ -185,7 +186,7 @@ const getFilteredByTags = (selectedTags, artists) => {
         matchCount++;
       }
     });
-    if (matchCount === selectedTags.length) {
+    if (matchCount === filterCount) {
       return [...ret, artist];
     }
     return ret;
