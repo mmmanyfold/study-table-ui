@@ -1,9 +1,9 @@
 import React from 'react';
 import CloseIcon from '../assets/close-icon.svg';
 
-const SearchBar = ({ value, onChange, onClear }) => {
+const SearchBar = ({ value, onChange, onClear, visible }) => {
   return (
-    <div className="search-container">
+    <div className="search-container" style={visible ? { display: 'none' } : null}>
       <input
         type="text"
         value={value}

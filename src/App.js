@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
-import Filters from './components/Filters';
+import TagsColumn from './components/TagsColumn';
 import SearchBar from './components/SearchBar';
-import './App.css';
+import './App.scss';
 
 const MOBILE_BREAK = 800;
 const JSON_ENDPOINT =
@@ -17,6 +17,9 @@ function App() {
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
+
+  const gridRef = useRef(null);
+  const [gridScroll, setGridScroll] = useState(null);
 
   const windowSize = useWindowSize();
   const mobile = windowSize.width <= MOBILE_BREAK;
@@ -32,6 +35,14 @@ function App() {
       setShowTags(true);
     }
   }, [windowSize]);
+
+  useEffect(() => {
+    const onScroll = (e) => {
+      setGridScroll(e.target.documentElement?.scrollTop);
+    };
+    gridRef?.current?.addEventListener('scroll', onScroll);
+    return () => gridRef?.current?.removeEventListener('scroll', onScroll);
+  }, [gridScroll, gridRef]);
 
   const fetchdata = async () => {
     setError(false);
@@ -88,13 +99,15 @@ function App() {
     <>
       <div
         onClick={() => setShowTags(!showTags)}
-        className="mobile-filter-toggle"
+        className="mobile-tag-toggle"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
         {showTags ? '← View Artists' : '+ View Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
-      {!showTags && <SearchBar value={query} onChange={setQuery} />}
+      {!showTags && (
+        <SearchBar value={query} onChange={setQuery} visible={gridScroll > 50} />
+      )}
     </>
   );
 
@@ -114,41 +127,68 @@ function App() {
   } else {
     content = (
       <div className="main">
-        <Filters
+        <TagsColumn
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
-          onClear={() => setActiveTags([])}
+          onClear={() => {
+            setActiveTags([]);
+            setFilteredArtists(artists);
+          }}
           visible={showTags}
           windowSize={windowSize}
         />
-        <ArtistGrid
-          data={filteredArtists}
-          visible={showArtists}
-          windowSize={windowSize}
-          mobile={mobile}
-        />
+        <div
+          ref={(el) => {
+            setGridScroll(el?.scrollTop);
+            gridRef.current = el;
+          }}
+          className="grid-scrollview"
+          style={{ height: windowSize.height, display: showArtists ? 'block' : 'none' }}
+          tabIndex="0"
+        >
+          <ArtistGrid
+            data={filteredArtists}
+            visible={showArtists}
+            windowSize={windowSize}
+            mobile={mobile}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="app">
-      {mobile ? (
-        !loading && !error && mobileHeader
-      ) : (
-        <SearchBar
-          value={query}
-          onChange={onChangeSearch}
-          onClear={() => onChangeSearch('')}
-        />
-      )}
-      {content}
+      <header>
+        <h1>Sculpture.Directory</h1>
+      </header>
+      <main>
+        {mobile ? (
+          !loading && !error && mobileHeader
+        ) : (
+          <SearchBar
+            value={query}
+            onChange={onChangeSearch}
+            onClear={() => {
+              setQuery('');
+              setFilteredArtists(artists);
+            }}
+          />
+        )}
+
+        {content}
+      </main>
     </div>
   );
 }
 
 export default App;
+
+//
+//
+// FUNCTIONS
+//
 
 const sortByName = (data, type = 'artists') => {
   if (type === 'artists') {
@@ -198,16 +238,16 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
   return sortByName(results);
 };
 
-const getFilteredByTags = (selectedTags, artists) => {
-  const filterCount = selectedTags.length;
+const getFilteredByTags = (tags, artists) => {
+  const activeTagCount = tags.length;
   const results = artists.reduce((ret, artist) => {
     let matchCount = 0;
-    selectedTags.forEach((tag) => {
+    tags.forEach((tag) => {
       if (artist.fields.Tags?.includes(tag.name)) {
         matchCount++;
       }
     });
-    if (matchCount === filterCount) {
+    if (matchCount === activeTagCount) {
       return [...ret, artist];
     }
     return ret;
