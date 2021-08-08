@@ -118,7 +118,10 @@ function App() {
           data={tags}
           active={activeTags}
           onSelect={onSelectTag}
-          onClear={() => setActiveTags([])}
+          onClear={() => {
+            setActiveTags([]);
+            setFilteredArtists(artists);
+          }}
           visible={showTags}
           windowSize={windowSize}
         />
@@ -134,21 +137,35 @@ function App() {
 
   return (
     <div className="app">
-      {mobile ? (
-        !loading && !error && mobileHeader
-      ) : (
-        <SearchBar
-          value={query}
-          onChange={onChangeSearch}
-          onClear={() => onChangeSearch('')}
-        />
-      )}
-      {content}
+      <header>
+        <h1>Sculpture.Directory</h1>
+      </header>
+      <main>
+        {mobile ? (
+          !loading && !error && mobileHeader
+        ) : (
+          <SearchBar
+            value={query}
+            onChange={onChangeSearch}
+            onClear={() => {
+              setQuery('');
+              setFilteredArtists(artists);
+            }}
+          />
+        )}
+
+        {content}
+      </main>
     </div>
   );
 }
 
 export default App;
+
+//
+//
+// FUNCTIONS
+//
 
 const sortByName = (data, type = 'artists') => {
   if (type === 'artists') {

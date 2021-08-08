@@ -13,7 +13,11 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
   };
 
   return (
-    <div className="grid-scrollview" style={!visible ? { display: 'none' } : null}>
+    <div
+      className="grid-scrollview"
+      style={{ height: windowSize.height, display: visible ? 'block' : 'none' }}
+      tabIndex="0"
+    >
       <div className="grid">
         {data?.map((item, i) => (
           <ArtistCard
@@ -82,7 +86,7 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
         </div>
         <div className="artist-heading">
           <div className="artist-name">{name}</div>
-          <div className="artist-tags">
+          <div className="artist-tags" tabIndex="0">
             {tags?.map((tag, i) => (
               <div key={`${tag}-${i}`} className="artist-tag">
                 {tag}
@@ -103,7 +107,7 @@ const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
   const { Name: name, Info: info } = artist.fields;
 
   const thumbStyle = getThumbnailStyle(true, artist);
-  const viewAreaHeight = windowSize.height - 100;
+  const viewAreaHeight = windowSize.height - 163;
 
   return (
     <div className="artist-mobile-view" style={{ height: viewAreaHeight }}>

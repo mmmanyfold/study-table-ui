@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600&display=swap');
 
-$lightgray: #eee;
+$lightgray: #ccc;
 $darkgray: #333;
 $white: #fff;
 $purple: #9883e5;
@@ -13,6 +13,16 @@ $yellow: #fff0e2;
   font-size: 1em;
   color: $darkgray;
   background-color: $white;
+}
+
+header {
+  padding: 0 1.5em;
+  border-bottom: 1px solid $darkgray;
+  h1 {
+    margin-top: 0.5em;
+    margin-bottom: 0.25em;
+    font-weight: 400;
+  }
 }
 
 a {
@@ -93,7 +103,6 @@ a {
 }
 
 .grid-scrollview {
-  height: 100vh;
   flex: 1;
   background-color: $white;
   overflow-y: scroll;
@@ -110,7 +119,7 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 4.5em 1em 1em 1em;
+  padding: 4.2em 1em 8em 1em;
 }
 
 .grid-item {
@@ -146,14 +155,14 @@ a {
   justify-content: center;
   background-color: $white;
   border-width: 0 0 1px 0;
-  border-color: $lightgray;
+  border-color: $darkgray;
   border-style: solid;
   z-index: 1;
 }
 
 .search-input {
   flex: 1;
-  padding: 0.8em 1em 0.5em 1em;
+  padding: 0.5em 1em 0.3em 1.2em;
   font-family: 'Martel Sans', sans-serif;
   font-size: 1.2em;
   border: 0;
@@ -179,15 +188,15 @@ a {
 }
 
 .tags-container {
-  margin-bottom: 10em;
+  margin-bottom: 15em;
 }
 
 .tags-header {
   display: flex;
-  margin-top: 4.5em;
+  margin-top: 4.25em;
   padding: 0 0 0.4em 1.5em;
   font-weight: 600;
-  border-bottom: 1px solid $lightgray;
+  border-bottom: 1px solid $darkgray;
 }
 
 .tag {
@@ -217,6 +226,16 @@ a {
 }
 
 @media screen and (max-width: 800px) {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 63px;
+    h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+  }
   .artist-card {
     height: 119px;
     display: flex;
@@ -286,7 +305,7 @@ a {
   }
   .grid {
     margin: 104px 0 16px 0;
-    padding: 0;
+    padding: 0 0 4.5em 0;
   }
   .grid-item {
     flex-basis: 100%;
@@ -304,6 +323,7 @@ a {
     font-weight: 600;
     z-index: 1;
     border-bottom: 1px solid $darkgray;
+    cursor: pointer;
   }
   .no-results {
     flex: 1;
@@ -329,6 +349,7 @@ a {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 12em;
   }
   .tags-header {
     width: 100%;

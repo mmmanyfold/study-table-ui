@@ -21,6 +21,7 @@ const TagsColumn = ({ data, active, visible, windowSize, onSelect, onClear }) =>
       <div
         className="tags-scrollview"
         style={{ height: windowSize.height, display: visible ? 'block' : 'none' }}
+        tabIndex="0"
       >
         <div className="tags-container">
           {data.map((tag) => (
