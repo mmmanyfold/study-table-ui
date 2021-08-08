@@ -3,7 +3,7 @@ import useWindowSize from './hooks/useWindowSize';
 import ArtistGrid from './components/ArtistGrid';
 import Filters from './components/Filters';
 import SearchBar from './components/SearchBar';
-import './App.css';
+import './App.scss';
 
 const MOBILE_BREAK = 800;
 const JSON_ENDPOINT =

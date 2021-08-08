@@ -1,31 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600&display=swap');
 
+$lightgray: #eee;
+$darkgray: #333;
+$white: #fff;
+$purple: #9883e5;
+$yellow: #fff0e2;
+
 .app {
   width: 100%;
   font-family: 'Martel Sans', sans-serif;
   font-weight: 400;
   font-size: 1em;
-  color: #333;
-  background-color: #fff;
+  color: $darkgray;
+  background-color: $white;
 }
 
 a {
-  color: #9883e5;
+  color: $purple;
 }
 
 .artist-card {
   flex: 1;
   margin: 1em;
   overflow: hide;
-  background-color: #fff;
+  background-color: $white;
   border-radius: 6px;
-  border: 1px solid #bbb;
+  border: 1px solid $lightgray;
   cursor: pointer;
-}
-
-.artist-card.selected {
-  border-color: #000;
-  cursor: initial;
+  &.selected {
+    border-color: $darkgray;
+    cursor: initial;
+  }
 }
 
 .artist-thumb {
@@ -53,21 +58,20 @@ a {
   position: absolute;
   bottom: 0;
   padding: 0.25em 0.5em 0 0.75em;
-  background-color: #fff;
+  background-color: $white;
   font-size: 1.25em;
   cursor: pointer;
 }
 
 .artist-heading {
   padding: 0.6em 0.9em 0 0.9em;
-  border-top: 1px solid #bbb;
+  border-top: 1px solid $lightgray;
 }
 
 .artist-name {
   font-size: 1.2em;
   font-weight: 600;
 }
-
 
 .artist-tags {
   height: 101px;
@@ -85,12 +89,12 @@ a {
   display: inline-block;
   margin: 0 8px 6px 0;
   padding: 2.75px 8px 1px 8px;
-  background-color: #fff0e2;
+  background-color: $yellow;
 }
 
 .filters-scrollview {
   width: 200px;
-  background-color: #fff;
+  background-color: $white;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -109,13 +113,13 @@ a {
   margin-top: 4.5em;
   padding: 0 0 0.4em 1.5em;
   font-weight: 600;
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid $lightgray;
 }
 
 .grid-scrollview {
   height: 100vh;
   flex: 1;
-  background-color: #fff;
+  background-color: $white;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -149,7 +153,7 @@ a {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  background-color: #fff;
+  background-color: $white;
 }
 
 .no-results {
@@ -164,9 +168,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: $white;
   border-width: 0 0 1px 0;
-  border-color: #bbb;
+  border-color: $lightgray;
   border-style: solid;
   z-index: 1;
 }
@@ -177,7 +181,7 @@ a {
   font-family: 'Martel Sans', sans-serif;
   font-size: 1.2em;
   border: 0;
-  background-color: #fff;
+  background-color: $white;
 }
 
 .search-clear-icon {
@@ -190,13 +194,13 @@ a {
   display: block;
   padding: 0.55em 1em 0.25em 1.5em;
   cursor: pointer;
-  background-color: #fff;
-  border: 1px solid #fff;
+  background-color: $white;
+  border: 1px solid $white;
 }
 
 .tag.selected {
-  background-color: #fff0e2;
-  border: 1px solid #fff0e2;
+  background-color: $yellow;
+  border: 1px solid $yellow;
 }
 
 /* MEDIA QUERIES */
@@ -218,7 +222,7 @@ a {
     height: 119px;
     display: flex;
     margin-bottom: 0;
-    border-color: #000;
+    border-color: $darkgray;
     border-radius: 0;
   }
   .artist-thumb {
@@ -253,14 +257,14 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #fff;
+    background-color: $white;
   }
   .artist-mobile-card {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin: 0 1em 1em 1em;
-    border: 1px solid #000;
+    border: 1px solid $darkgray;
     overflow-y: scroll;
   }
   .artist-mobile-thumb {
@@ -295,7 +299,7 @@ a {
     justify-content: center;
     padding: 13px 0 7px 0;
     margin-top: 51px;
-    border-color: #000;
+    border-color: $darkgray;
   }
   .grid {
     margin: 104px 0 16px 0;
@@ -312,11 +316,11 @@ a {
     align-items: center;
     justify-content: center;
     padding-top: 5px;
-    background-color: #fff;
+    background-color: $white;
     font-size: 16px;
     font-weight: 600;
     z-index: 1;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid $darkgray;
   }
   .no-results {
     flex: 1;
@@ -327,8 +331,8 @@ a {
   .search-container {
     width: 100%;
     margin-top: 51px;
-    background-color: #fff;
-    border-color: #000;
+    background-color: $white;
+    border-color: $darkgray;
   }
   .search-input {
     padding: 12px 0 8px 16px;
