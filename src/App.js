@@ -164,15 +164,29 @@ const dedupeObjectsById = (objects) => {
 };
 
 const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
-  const str = query.toLowerCase();
-  const matchingTags = tags.filter((t) => t.name.toLowerCase().includes(str));
-  const resultsFromTags = matchingTags.reduce(
-    (ret, t) => ret.concat(artistsByTag[t.name]),
-    []
-  );
+  const str = query.toLowerCase().trim();
+  const words = str.split(' ');
+  const multiword = words.length > 1;
+
+  let resultsFromTags;
+  if (multiword) {
+    const relevantTags = words.reduce((ret, word) => {
+      const wordMatches = tags.filter((t) => word.includes(t.name.toLowerCase()));
+      return [...ret, ...wordMatches];
+    }, []);
+    resultsFromTags = getFilteredByTags(relevantTags, artists);
+  } else {
+    const relevantTags = tags.filter((t) => t.name.toLowerCase().includes(str));
+    resultsFromTags = relevantTags.reduce(
+      (ret, t) => ret.concat(artistsByTag[t.name]),
+      []
+    );
+  }
+
   const resultsFromNames = artists.filter((artist) =>
     artist.fields.Name.toLowerCase().includes(str)
   );
+
   const results = dedupeObjectsById([...resultsFromTags, ...resultsFromNames]);
   return sortByName(results);
 };
