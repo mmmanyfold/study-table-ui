@@ -168,8 +168,14 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
   const words = str.split(' ');
   const multiword = words.length > 1;
 
+  const resultsFromNames = artists.filter((artist) =>
+    artist.fields.Name.toLowerCase().includes(str)
+  );
+
   let resultsFromTags;
-  if (multiword) {
+  if (resultsFromNames.length && multiword) {
+    resultsFromTags = [];
+  } else if (multiword) {
     const relevantTags = words.reduce((ret, word) => {
       const wordMatches = tags.filter((t) => word.includes(t.name.toLowerCase()));
       return [...ret, ...wordMatches];
@@ -182,11 +188,6 @@ const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
       []
     );
   }
-
-  const resultsFromNames = artists.filter((artist) =>
-    artist.fields.Name.toLowerCase().includes(str)
-  );
-
   const results = dedupeObjectsById([...resultsFromTags, ...resultsFromNames]);
   return sortByName(results);
 };
