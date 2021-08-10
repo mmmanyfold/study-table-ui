@@ -14,7 +14,7 @@ const SelectedArtistMobile = ({
   const { Name: name, Info: info } = artist.fields;
 
   const thumbStyle = getThumbnailStyle(true, artist);
-  const viewAreaHeight = windowSize.height - 163;
+  const viewAreaHeight = windowSize.height - 64;
 
   const handleReturn = () => {
     setSelectedArtist(null);
@@ -26,7 +26,7 @@ const SelectedArtistMobile = ({
         ← Back to Artists
       </div>
       <div className="artist-mobile-card">
-        <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }} />
+        <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.55 }} />
         <div className="artist-mobile-info">
           <div className="artist-mobile-name">{name}</div>
           {info ? (

@@ -97,7 +97,7 @@ function App() {
     }
   };
 
-  const mobileHeader = (
+  const mobileHeader = !selectedArtist && (
     <>
       <div
         onClick={() => setShowTags(!showTags)}
@@ -110,7 +110,7 @@ function App() {
       <SearchBar
         value={query}
         onChange={setQuery}
-        visible={gridScroll < 50 && !showTags && !selectedArtist}
+        visible={gridScroll < 50 && !showTags}
       />
     </>
   );

@@ -270,7 +270,7 @@ a {
   }
   .artist-mobile-view {
     position: absolute;
-    top: 101px;
+    top: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -291,6 +291,7 @@ a {
   .artist-mobile-info {
     flex: 1;
     padding: 1em;
+    border-top: 1px solid $darkgray;
     line-height: 1.35em;
     word-break: break-word;
     overflow-y: scroll;
