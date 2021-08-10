@@ -1,0 +1,43 @@
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+
+const SelectedArtistMobile = ({
+  artist,
+  windowSize,
+  setSelectedArtist,
+  getThumbnailStyle,
+}) => {
+  if (!artist) {
+    return null;
+  }
+
+  const { Name: name, Info: info } = artist.fields;
+
+  const thumbStyle = getThumbnailStyle(true, artist);
+  const viewAreaHeight = windowSize.height - 163;
+
+  const handleReturn = () => {
+    setSelectedArtist(null);
+  };
+
+  return (
+    <div className="artist-mobile-view" style={{ height: viewAreaHeight }}>
+      <div className="artist-mobile-return" role="button" onClick={handleReturn}>
+        ← Back to Artists
+      </div>
+      <div className="artist-mobile-card">
+        <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.5 }} />
+        <div className="artist-mobile-info">
+          <div className="artist-mobile-name">{name}</div>
+          {info ? (
+            <ReactMarkdown linkTarget={'_blank'}>{info}</ReactMarkdown>
+          ) : (
+            <p>No information at this time.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SelectedArtistMobile;
