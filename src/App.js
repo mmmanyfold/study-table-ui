@@ -109,7 +109,7 @@ function App() {
       </div>
       <SearchBar
         value={query}
-        onChange={setQuery}
+        onChange={onChangeSearch}
         visible={gridScroll < 50 && !showTags}
       />
     </>
