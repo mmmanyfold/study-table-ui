@@ -174,6 +174,7 @@ function App() {
           !loading && !error && mobileHeader
         ) : (
           <SearchBar
+            visible
             value={query}
             onChange={onChangeSearch}
             onClear={() => {
