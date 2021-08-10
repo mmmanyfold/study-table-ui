@@ -17,6 +17,7 @@ function App() {
   const [tags, setTags] = useState([]);
   const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
+  const [selectedArtist, setSelectedArtist] = useState(null);
 
   const gridRef = useRef(null);
   const [gridScroll, setGridScroll] = useState(null);
@@ -105,9 +106,11 @@ function App() {
         {showTags ? '← View Artists' : '+ View Tags'}
         {!showTags && !!activeTags.length && ` (${activeTags.length})`}
       </div>
-      {!showTags && (
-        <SearchBar value={query} onChange={setQuery} visible={gridScroll > 50} />
-      )}
+      <SearchBar
+        value={query}
+        onChange={setQuery}
+        visible={gridScroll < 50 && !showTags && !selectedArtist}
+      />
     </>
   );
 
@@ -152,6 +155,8 @@ function App() {
             visible={showArtists}
             windowSize={windowSize}
             mobile={mobile}
+            selectedArtist={selectedArtist}
+            setSelectedArtist={setSelectedArtist}
           />
         </div>
       </div>
@@ -176,7 +181,6 @@ function App() {
             }}
           />
         )}
-
         {content}
       </main>
     </div>

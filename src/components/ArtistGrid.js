@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-function ArtistGrid({ data, visible, mobile, windowSize }) {
-  const [selectedOnMobile, setSelectedOnMobile] = useState(null);
-
-  const onMobileSelect = (artist) => {
-    setSelectedOnMobile(artist);
-  };
-
-  const onMobileReturn = () => {
-    setSelectedOnMobile(null);
-  };
-
+function ArtistGrid({ data, mobile, windowSize, selectedArtist, setSelectedArtist }) {
   return (
     <>
       <div className="grid">
@@ -20,7 +10,8 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
             key={`${item.id}-${i}`}
             item={item}
             mobile={mobile}
-            onMobileSelect={onMobileSelect}
+            selectedArtist={selectedArtist}
+            setSelectedArtist={setSelectedArtist}
           />
         ))}
         {!data.length && (
@@ -28,9 +19,9 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
         )}
       </div>
       <ArtistViewMobile
-        artist={selectedOnMobile}
+        artist={selectedArtist}
+        setSelectedArtist={setSelectedArtist}
         windowSize={windowSize}
-        onReturn={onMobileReturn}
       />
     </>
   );
@@ -38,33 +29,32 @@ function ArtistGrid({ data, visible, mobile, windowSize }) {
 
 export default ArtistGrid;
 
-const ArtistCard = ({ item, mobile, onMobileSelect }) => {
-  const [selected, setSelected] = useState(false);
+const ArtistCard = ({ item, mobile, selectedArtist, setSelectedArtist }) => {
+  const isSelected = selectedArtist?.id === item.id;
 
   const handleSelect = () => {
-    if (mobile) {
-      onMobileSelect(item);
-    } else {
-      setSelected(item);
-    }
+    setSelectedArtist(item);
   };
 
   const handleReturn = (e) => {
     e.stopPropagation();
-    setSelected(null);
+    setSelectedArtist(null);
   };
 
-  const showImage = mobile || !selected;
+  const showImage = mobile || !isSelected;
   const thumbStyle = getThumbnailStyle(showImage, item);
 
   const { Name: name, Info: info, Tags: tags } = item.fields;
 
   return (
     <div className="grid-item">
-      <div onClick={handleSelect} className={`artist-card ${selected ? 'selected' : ''}`}>
+      <div
+        onClick={handleSelect}
+        className={`artist-card ${isSelected ? 'selected' : ''}`}
+      >
         <div style={{ position: 'relative' }}>
           <div className="artist-thumb" style={thumbStyle}>
-            {selected && !mobile && (
+            {isSelected && !mobile && (
               <div className="artist-info">
                 {info ? (
                   <ReactMarkdown linkTarget={'_blank'}>{info}</ReactMarkdown>
@@ -74,7 +64,7 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
               </div>
             )}
           </div>
-          {selected && !mobile && (
+          {isSelected && !mobile && (
             <div role="button" onClick={handleReturn} className="artist-return-btn">
               ←
             </div>
@@ -95,7 +85,7 @@ const ArtistCard = ({ item, mobile, onMobileSelect }) => {
   );
 };
 
-const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
+const ArtistViewMobile = ({ artist, windowSize, setSelectedArtist }) => {
   if (!artist) {
     return null;
   }
@@ -105,9 +95,13 @@ const ArtistViewMobile = ({ artist, windowSize, onReturn }) => {
   const thumbStyle = getThumbnailStyle(true, artist);
   const viewAreaHeight = windowSize.height - 163;
 
+  const handleReturn = () => {
+    setSelectedArtist(null);
+  };
+
   return (
     <div className="artist-mobile-view" style={{ height: viewAreaHeight }}>
-      <div className="artist-mobile-return" role="button" onClick={onReturn}>
+      <div className="artist-mobile-return" role="button" onClick={handleReturn}>
         ← Back to Artists
       </div>
       <div className="artist-mobile-card">
