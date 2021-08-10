@@ -97,6 +97,8 @@ function App() {
     }
   };
 
+  const onClearSearch = () => onChangeSearch('');
+
   const mobileHeader = !selectedArtist && (
     <>
       <div
@@ -110,6 +112,7 @@ function App() {
       <SearchBar
         value={query}
         onChange={onChangeSearch}
+        onClear={onClearSearch}
         visible={gridScroll < 50 && !showTags}
       />
     </>
@@ -177,10 +180,7 @@ function App() {
             visible
             value={query}
             onChange={onChangeSearch}
-            onClear={() => {
-              setQuery('');
-              setFilteredArtists(artists);
-            }}
+            onClear={onClearSearch}
           />
         )}
         {content}
