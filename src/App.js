@@ -101,7 +101,7 @@ function App() {
     <>
       <div
         onClick={() => setShowTags(!showTags)}
-        className="mobile-tag-toggle"
+        className="tag-toggle-mobile"
         style={showTags ? { justifyContent: 'flex-start', paddingLeft: '1em' } : {}}
       >
         {showTags ? '← View Artists' : '+ View Tags'}

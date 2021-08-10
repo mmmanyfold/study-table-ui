@@ -21,14 +21,14 @@ const SelectedArtistMobile = ({
   };
 
   return (
-    <div className="artist-mobile-view" style={{ height: viewAreaHeight }}>
-      <div className="artist-mobile-return" role="button" onClick={handleReturn}>
+    <div className="artist-selected-mobile" style={{ height: viewAreaHeight }}>
+      <div className="artist-selected-return" role="button" onClick={handleReturn}>
         ← Back to Artists
       </div>
-      <div className="artist-mobile-card">
+      <div className="artist-selected-inner">
         <div style={{ ...thumbStyle, height: (viewAreaHeight - 32) * 0.55 }} />
-        <div className="artist-mobile-info">
-          <div className="artist-mobile-name">{name}</div>
+        <div className="artist-selected-info">
+          <div className="artist-selected-name">{name}</div>
           {info ? (
             <ReactMarkdown linkTarget={'_blank'}>{info}</ReactMarkdown>
           ) : (
