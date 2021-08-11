@@ -3,7 +3,7 @@ import CloseIcon from '../assets/close-icon.svg';
 
 const SearchBar = ({ value, onChange, onClear, visible }) => {
   return (
-    <div className="search-container" style={visible ? { display: 'none' } : null}>
+    <div className="search-container" style={visible ? null : { display: 'none' }}>
       <input
         type="text"
         value={value}
