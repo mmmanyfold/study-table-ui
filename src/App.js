@@ -151,7 +151,10 @@ function App() {
             gridRef.current = el;
           }}
           className="grid-scrollview"
-          style={{ height: windowSize.height, display: showArtists ? 'block' : 'none' }}
+          style={{
+            height: mobile ? windowSize.height - 64 : windowSize.height - 84,
+            display: showArtists ? 'flex' : 'none',
+          }}
           tabIndex="0"
         >
           <ArtistGrid

@@ -20,6 +20,26 @@ function ArtistGrid({ data, mobile, windowSize, selectedArtist, setSelectedArtis
           <div className="no-results">No artists match your criteria.</div>
         )}
       </div>
+      <div className="site-description">
+        <div>
+          This tagged directory of sculptors was developed by Gordon Hall as an open
+          resource. To suggest an artist or an edit, please email{' '}
+          <a
+            href="mailto:gordonhall@vassar.edu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            gordonhall@vassar.edu
+          </a>
+          .
+          <br />
+          Website by{' '}
+          <a href="https://mmmanyfold.com" target="_blank" rel="noopener noreferrer">
+            mmmanyfold
+          </a>
+          .
+        </div>
+      </div>
       {mobile && (
         <SelectedArtistMobile
           artist={selectedArtist}
