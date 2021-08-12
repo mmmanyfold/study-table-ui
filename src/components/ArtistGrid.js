@@ -20,12 +20,14 @@ function ArtistGrid({ data, mobile, windowSize, selectedArtist, setSelectedArtis
           <div className="no-results">No artists match your criteria.</div>
         )}
       </div>
-      <SelectedArtistMobile
-        artist={selectedArtist}
-        setSelectedArtist={setSelectedArtist}
-        windowSize={windowSize}
-        getThumbnailStyle={getThumbnailStyle}
-      />
+      {mobile && (
+        <SelectedArtistMobile
+          artist={selectedArtist}
+          setSelectedArtist={setSelectedArtist}
+          windowSize={windowSize}
+          getThumbnailStyle={getThumbnailStyle}
+        />
+      )}
     </>
   );
 }
