@@ -28,7 +28,15 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      # Runs a single command using the runners shell
       - name: Deploy
-        run: yarn run deploy
+        run: |
+          git config --global user.name dviramontes
+          git config --global user.email dviramontes@gmail.com
+          git remote set-url origin https://${github_token}@github.com/${repository}
+          yarn run deploy
+        env:
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          github_token: ${{ secrets.PAT_DEPLOYER }}
+          repository: ${{ github.repository }}
 
