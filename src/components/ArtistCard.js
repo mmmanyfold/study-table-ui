@@ -22,7 +22,8 @@ const ArtistCard = ({
   const showImage = mobile || !isSelected;
   const thumbStyle = getThumbnailStyle(showImage, item);
 
-  const { Name: name, Info: info, Tags: tags } = item.fields;
+  const name = `${item.fields['First Name'] || ''} ${item.fields['Last Name'] || ''}`.trim();
+  const { Info: info, Tags: tags } = item.fields;
 
   return (
     <div className="grid-item">

@@ -11,7 +11,8 @@ const SelectedArtistMobile = ({
     return null;
   }
 
-  const { Name: name, Info: info } = artist.fields;
+  const name = `${artist.fields['First Name'] || ''} ${artist.fields['Last Name'] || ''}`.trim();
+  const { Info: info } = artist.fields;
 
   const thumbStyle = getThumbnailStyle(true, artist);
   const viewAreaHeight = windowSize.height - 64;

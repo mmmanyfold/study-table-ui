@@ -1,6 +1,6 @@
 export const sortByName = (data, type = 'artists') => {
   if (type === 'artists') {
-    return data.sort((a, b) => (a.fields?.Name > b.fields?.Name ? 1 : -1));
+    return data.sort((a, b) => (a.fields?.['Last Name'] > b.fields?.['Last Name'] ? 1 : -1));
   }
   if (type === 'tags') {
     return data.sort((a, b) => (a.name > b.name ? 1 : -1));
@@ -16,9 +16,10 @@ export const getFilteredByQuery = (query, tags, artists, artistsByTag) => {
   const words = str.split(' ');
   const multiword = words.length > 1;
 
-  const resultsFromNames = artists.filter((artist) =>
-    artist.fields.Name.toLowerCase().includes(str)
-  );
+  const resultsFromNames = artists.filter((artist) => {
+    const name = `${artist.fields['First Name'] || ''} ${artist.fields['Last Name'] || ''}`.trim();
+    return name.toLowerCase().includes(str);
+  });
   const multiwordTagMatches = multiword
     ? tags.filter((t) => str.includes(t.name.toLowerCase()))
     : [];
