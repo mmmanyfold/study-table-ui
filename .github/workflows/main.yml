@@ -28,15 +28,12 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
+      - name: Build
+        run: yarn run build
+
       - name: Deploy
-        run: |
-          git config --global user.name dviramontes
-          git config --global user.email dviramontes@gmail.com
-          git remote set-url origin https://${github_token}@github.com/${repository}
-          yarn run deploy
-        env:
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          github_token: ${{ secrets.PAT_DEPLOYER }}
-          repository: ${{ github.repository }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAT_DEPLOYER }}
+          publish_dir: ./build
 
