@@ -8,7 +8,7 @@ import './App.scss';
 
 const MOBILE_BREAK = 800;
 const JSON_ENDPOINT =
-  'https://study-table-service-assets.s3.us-east-1.amazonaws.com/airtable.json';
+  'https://study-table-service.moonpuppy.workers.dev/assets/airtable.json';
 
 function App() {
   const [loading, setLoading] = useState(true);
